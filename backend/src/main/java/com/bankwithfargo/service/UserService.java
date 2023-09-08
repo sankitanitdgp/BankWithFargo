@@ -16,6 +16,7 @@ public class UserService {
     }
 
     public String authorizeUser(User user){
+        System.out.println(user);
         User foundUser=userRepository.findOneByEmail(user.getEmail());
         if(foundUser!=null) {
             if(foundUser.getPassword().equals(user.getPassword()))
