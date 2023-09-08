@@ -17,12 +17,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 
 @RestController
-// Main class
 public class UserController {
     @Autowired
     UserService userService;
   
-    @RequestMapping(value="/getAllUsers", method=POST, produces = "application/json")
+    @RequestMapping(value="/getAllUsers", method=GET, produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> getAllUsers() {
         return new ResponseEntity<Object>(userService.getAllUsers(), HttpStatus.OK);
