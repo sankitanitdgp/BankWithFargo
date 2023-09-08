@@ -1,10 +1,18 @@
 import React from 'react'
 import '../App.css';
 import {useForm} from "react-hook-form";
+import UserService from '../service/UserService';
 
 function Login() {
   const{register,handleSubmit,formState:{error}}=useForm();
-  const onSubmit=(data)=>console.log(data);
+  const onSubmit=(data)=>{
+    console.log(data);
+    UserService.login({
+      email: data.email,
+      password: data.password
+    }).then((data)=> console.log(data))
+      .catch((error)=>console.log(error));
+  }
   return (
     <div>
         <p className='title'>Registration</p>
