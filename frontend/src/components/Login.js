@@ -1,34 +1,13 @@
-<<<<<<< Updated upstream
-
-import React, { useState } from "react"
-
-=======
 import {UserService, UserRegisterService} from '../service/UserService';
 import React, { useState } from "react"
 import '../App.css';
 import "bootstrap/dist/css/bootstrap.min.css"
->>>>>>> Stashed changes
 export default function (props) {
   let [authMode, setAuthMode] = useState("signin")
 
   const changeAuthMode = () => {
     setAuthMode(authMode === "signin" ? "signup" : "signin")
   }
-<<<<<<< Updated upstream
-  
-   
-  const[AccountNumber,setAccountNumber]=useState('')
-  const[Email,setEmail]=useState('')
-  const[Password,SetPassword]=useState('')
-  function validateForm()
-  {
-    if(AccountNumber.length==0)
-    {
-      alert('Invalid Account Number')
-      return
-    }
-  }
-=======
   const loginUser=()=>{
     // console.log(data);
     UserService.login({
@@ -67,7 +46,6 @@ export default function (props) {
   //   submitForm();
 
   // }
->>>>>>> Stashed changes
 
   if (authMode === "signin") {
     return (
@@ -81,11 +59,7 @@ export default function (props) {
                 Sign Up
               </span>
             </div>
-<<<<<<< Updated upstream
-            <div className="form-group mt-3">
-=======
             {/* <div className="form-group mt-3">
->>>>>>> Stashed changes
               <label>Account Number</label>
               <input
                 type="number"
@@ -93,11 +67,7 @@ export default function (props) {
                 placeholder="Enter account number"
                 onChange={(e)=>setAccountNumber(e.target.value)}
               />
-<<<<<<< Updated upstream
-            </div>
-=======
             </div> */}
->>>>>>> Stashed changes
             <div className="form-group mt-3">
               <label>Email address</label>
               <input
@@ -115,8 +85,6 @@ export default function (props) {
               />
             </div>
             <div className="form-group mt-3">
-<<<<<<< Updated upstream
-=======
               <label>PAN</label>
               <input
                 type="text"
@@ -141,22 +109,15 @@ export default function (props) {
               />
             </div>
             {/* <div className="form-group mt-3">
->>>>>>> Stashed changes
               <label> Confirm Password</label>
               <input
                 type="password"
                 className="form-control mt-1"
                 placeholder="Enter the same password"
               />
-<<<<<<< Updated upstream
-            </div>
-            <div className="d-grid gap-2 mt-3">
-              <button type="submit" className="btn btn-primary" onClick={()=>{validateForm()}}>
-=======
             </div> */}
             <div className="d-grid gap-2 mt-3">
               <button type="submit" className="btn btn-primary" onClick={addUser}>
->>>>>>> Stashed changes
                 Submit
               </button>
             </div>
@@ -205,11 +166,7 @@ export default function (props) {
             />
           </div>
           <div className="d-grid gap-2 mt-3">
-<<<<<<< Updated upstream
-            <button type="submit" className="btn btn-primary" onClick={()=>{validateForm()}}>
-=======
             <button type="submit" className="btn btn-primary" onClick={loginUser}>
->>>>>>> Stashed changes
               Submit
             </button>
           </div>
