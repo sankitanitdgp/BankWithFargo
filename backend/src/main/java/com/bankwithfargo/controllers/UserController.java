@@ -7,16 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 
 @RestController
+
 public class UserController {
     @Autowired
     UserService userService;
@@ -27,13 +25,14 @@ public class UserController {
         return new ResponseEntity<Object>(userService.getAllUsers(), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/verify", method=POST, produces = "application/json")
+//    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(value="/verifyUser", method=POST, produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> authorizeUser(@RequestBody User user) {
         return new ResponseEntity<Object>(userService.authorizeUser(user), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/add", method=POST, produces = "application/json")
+    @RequestMapping(value="/addUser", method=POST, produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> addUser(@RequestBody User user) {
         return new ResponseEntity<Object>(userService.createUser(user), HttpStatus.OK);

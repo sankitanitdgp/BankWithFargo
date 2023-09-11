@@ -13,6 +13,7 @@ const UserService = {
     }
 };
 
+
 const UserRegisterService = {
     async register(userData){
         try{
@@ -25,3 +26,5 @@ const UserRegisterService = {
 };
 
 export {UserService, UserRegisterService};
+export default UserService;
+
