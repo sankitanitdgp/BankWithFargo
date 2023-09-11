@@ -1,13 +1,32 @@
+
+
+// function App() {
+//   return (
+//     <div className="App">
+//       <Login/>
+//     </div>
+//   );
+// }
+
+// export default App;
+
 import React from 'react';
-import './App.css';
-import Login from './components/Login';
+import "bootstrap/dist/css/bootstrap.min.css"
+import "./App.css"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Auth from './components/Auth';
+
 
 function App() {
   return (
-    <div className="App">
-      <Login/>
-    </div>
-  );
+    <BrowserRouter>
+      <Routes>
+        
+        <Route path="/" element={<Auth />} />
+       
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App
