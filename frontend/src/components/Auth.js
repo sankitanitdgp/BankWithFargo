@@ -1,4 +1,4 @@
-import {UserService, UserRegisterService} from '../service/UserService';
+import { UserService, UserRegisterService } from '../service/UserService';
 import React, { useState } from "react"
 import '../App.css';
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -8,34 +8,34 @@ export default function (props) {
   const changeAuthMode = () => {
     setAuthMode(authMode === "signin" ? "signup" : "signin")
   }
-  const loginUser=()=>{
+  const loginUser = () => {
     // console.log(data);
     UserService.login({
       email: email,
       password: password
-    }).then((data)=> {
+    }).then((data) => {
       console.log(data);
       setResponseMessage(data);
     })
-      .catch((error)=>console.log(error));
+      .catch((error) => console.log(error));
   }
-  
-  const addUser=()=>{
+
+  const addUser = () => {
     // validateForm();
     UserRegisterService.register({
       email: email,
       password: password
-    }).then((data)=> {
+    }).then((data) => {
       console.log(data);
       setResponseMessage(data);
     })
-      .catch((error)=>console.log(error));
+      .catch((error) => console.log(error));
   }
-   
-  const[AccountNumber,setAccountNumber]=useState('')
-  const[email,setEmail]=useState('')
-  const[password,SetPassword]=useState('')
-  const [responseMessage, setResponseMessage]=useState();
+
+  const [AccountNumber, setAccountNumber] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, SetPassword] = useState('')
+  const [responseMessage, setResponseMessage] = useState();
   // function validateForm()
   // {
   //   if(AccountNumber.length==0)
@@ -173,31 +173,6 @@ export default function (props) {
           <p className="text-center mt-2">
             Forgot <a href="#">password?</a>
           </p>
-
-import '../../src/styles/Login.css'
-import {useForm} from "react-hook-form";
-import UserService from '../service/UserService';
-
-function Login() {
-  const{register,handleSubmit,formState:{error}}=useForm();
-  const onSubmit=(data)=>{
-    console.log(data);
-    UserService.login({
-      email: data.email,
-      password: data.password
-    }).then((data)=> console.log(data))
-      .catch((error)=>console.log(error));
-  }
-  return (
-    <div>
-        <p className='title'>Login/Sign-up</p>
-      <form className="App" onSubmit={handleSubmit(onSubmit)}>
-        <input placeholder="Enter your email" type="email" {...register("email",{required:true})}></input>
-        <input placeholder="Enter your password" type="password"{...register("password")}></input>
-        <input placeholder="Login" className='submit' type={"submit"}></input>
-        <div>
-        <span class="psw">First-time user? <a href="#">Sign-up</a></span>
-        <span class="psw">Forgot <a href="#">password?</a></span>
         </div>
       </form>
     </div>
