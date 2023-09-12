@@ -84,7 +84,7 @@ export default function (props) {
                 placeholder="Enter password"
               />
             </div>
-            <div className="form-group mt-3">
+            {/* <div className="form-group mt-3">
               <label>PAN</label>
               <input
                 type="text"
@@ -107,7 +107,7 @@ export default function (props) {
                 className="form-control mt-1"
                 placeholder="Enter date"
               />
-            </div>
+            </div> */}
             {/* <div className="form-group mt-3">
               <label> Confirm Password</label>
               <input

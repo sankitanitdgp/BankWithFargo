@@ -54,7 +54,7 @@ export default function (props) {
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Sign In</h3>
             <div className="text-center">
-              Not registered yet?{" "}
+              First Time User?{" "}
               <span className="link-primary" onClick={changeAuthMode}>
                 Sign Up
               </span>
@@ -100,14 +100,14 @@ export default function (props) {
                 placeholder="Enter mobile number"
               />
             </div>
-            <div className="form-group mt-3">
+            {/* <div className="form-group mt-3">
               <label>DOB</label>
               <input
                 type="date"
                 className="form-control mt-1"
                 placeholder="Enter date"
               />
-            </div>
+            </div> */}
             {/* <div className="form-group mt-3">
               <label> Confirm Password</label>
               <input
