@@ -75,12 +75,9 @@ const Login = () => {
                 autocomplete="off"
               />
             </Form.Group>
-
-           
-
-
+            <br></br>
             <Button variant="primary" type="submit" block>
-              Sign Up
+              Submit
             </Button>
           </Form>
         </Col>

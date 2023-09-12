@@ -113,7 +113,7 @@ const SignUp = () => {
                 required
               />
             </Form.Group>
-
+            <br></br>
             <Button variant="primary" type="submit" block>
               Sign Up
             </Button>

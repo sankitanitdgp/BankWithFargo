@@ -44,86 +44,159 @@ const SignUp = () => {
     <Container>
       <Row className="justify-content-center">
         <Col md={6}>
-          <h2 className="text-center">Open Account</h2>
+          <h2 className="text-center">Open a Savings Account</h2>
           <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="username">
-              <Form.Label>Account Number</Form.Label>
+          <Form.Group controlId="title">
+              <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
-                name="accountNumber"
-                placeholder="Enter account number"
-                value={formData.accountNumber}
+                name="Title"
+                placeholder="Miss/Mr./Mrs."
+                value={formData.title}
                 onChange={handleChange}
                 required
               />
             </Form.Group>
 
-            <Form.Group controlId="email">
-              <Form.Label>Email address</Form.Label>
+            <Form.Group controlId="firstName">
+              <Form.Label>First Name</Form.Label>
               <Form.Control
-                type="email"
-                name="email"
-                placeholder="Enter email"
+                type="text"
+                name="firstName"
+                placeholder="Enter your first name"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="lastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="lastName"
+                placeholder="Enter your last name"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="dob">
+              <Form.Label>DOB</Form.Label>
+              <Form.Control
+                type="date"
+                name="dob"
+                placeholder=""
                 value={formData.email}
                 onChange={handleChange}
                 required
               />
             </Form.Group>
 
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
+            <Form.Group controlId="fatherName">
+              <Form.Label>Father's Name</Form.Label>
               <Form.Control
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                value={formData.password}
+                type="text"
+                name="fatherName"
+                placeholder="Enter your father's name"
+                value={formData.fatherName}
                 onChange={handleChange}
                 required
               />
             </Form.Group>
 
-            <Form.Group controlId="confirmPassword">
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirm password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-              {errors.confirmPassword && (
-                <Form.Text className="text-danger">{errors.confirmPassword}</Form.Text>
-              )}
-            </Form.Group>
-
-            <Form.Group controlId="mpin">
-              <Form.Label>MPIN</Form.Label>
+            <Form.Group controlId="accountNumber">
+              <Form.Label>Account Number</Form.Label>
               <Form.Control
                 type="number"
-                name="mpin"
-                placeholder="Enter MPIN"
-                value={formData.mpin}
+                name="accountNumber"
+                placeholder="Enter your Account Number"
+                value={formData.accountNumber}
                 onChange={handleChange}
                 required
               />
             </Form.Group>
 
-            <Form.Group controlId="confirmMpin">
-              <Form.Label>Confirm MPIN</Form.Label>
+            <Form.Group controlId="phone">
+              <Form.Label>Mobile Number</Form.Label>
               <Form.Control
                 type="number"
-                name="confirmMpin"
-                placeholder="Confirm MPIN"
-                value={formData.confirmMpin}
+                name="phoneNumber"
+                placeholder="Enter your Mobile no."
+                value={formData.phoneNumber}
                 onChange={handleChange}
                 required
               />
             </Form.Group>
 
+            <Form.Group controlId="pan">
+              <Form.Label>PAN</Form.Label>
+              <Form.Control
+                type="number"
+                name="pan"
+                placeholder="Enter your PAN"
+                value={formData.pan}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="presentAddress">
+              <Form.Label>Present Address</Form.Label>
+              <Form.Control
+                type="text"
+                name="presentAddress"
+                placeholder="Enter your Present Address"
+                value={formData.presentAddress}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="permanentAddress">
+              <Form.Label>Permanent Address</Form.Label>
+              <Form.Control
+                type="text"
+                name="permanentAddress"
+                placeholder="Enter your Permanent Address"
+                value={formData.presentAddress}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="occupation">
+              <Form.Label>Occupation Details</Form.Label>
+              <Form.Control
+                type="text"
+                name="occupation"
+                placeholder="Enter your occupation details"
+                value={formData.occupation}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="grossIncome">
+              <Form.Label>Gross Annual Income</Form.Label>
+              <Form.Control
+                type="number"
+                name="grossIncome"
+                placeholder="Enter your gross annual income in INR"
+                value={formData.grossIncome}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+            <br></br>
+            <span>
+            <div style={{ display: "flex" }}>
             <Button variant="primary" type="submit" block>
-              Sign Up
+              Create Account
             </Button>
+            </div>
+            </span>
           </Form>
         </Col>
       </Row>
