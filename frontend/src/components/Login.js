@@ -1,205 +1,92 @@
-import {UserService, UserRegisterService} from '../service/UserService';
-import React, { useState } from "react"
-import '../App.css';
-import "bootstrap/dist/css/bootstrap.min.css"
-export default function (props) {
-  let [authMode, setAuthMode] = useState("signin")
+import React, { useState } from 'react';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
-  const changeAuthMode = () => {
-    setAuthMode(authMode === "signin" ? "signup" : "signin")
-  }
-  const loginUser=()=>{
-    // console.log(data);
-    UserService.login({
-      email: email,
-      password: password
-    }).then((data)=> {
-      console.log(data);
-      setResponseMessage(data);
-    })
-      .catch((error)=>console.log(error));
-  }
-  
-  const addUser=()=>{
-    // validateForm();
-    UserRegisterService.register({
-      email: email,
-      password: password
-    }).then((data)=> {
-      console.log(data);
-      setResponseMessage(data);
-    })
-      .catch((error)=>console.log(error));
-  }
-   
-  const[AccountNumber,setAccountNumber]=useState('')
-  const[email,setEmail]=useState('')
-  const[password,SetPassword]=useState('')
-  const [responseMessage, setResponseMessage]=useState();
-  // function validateForm()
-  // {
-  //   if(AccountNumber.length==0)
-  //   {
-  //     alert('Invalid Account Number')
-  //     return
-  //   }
-  //   submitForm();
+const Login = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
 
-  // }
+  const [errors, setErrors] = useState("");
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z]+\.[A-Za-z]{2,}$/i;
+  const passwordRegex= /^[A-Za-z0-9]{8,}$/i;
 
-  if (authMode === "signin") {
-    return (
-      <div className="Auth-form-container">
-        <form className="Auth-form">
-          <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Sign In</h3>
-            <div className="text-center">
-              First Time User?{" "}
-              <span className="link-primary" onClick={changeAuthMode}>
-                Sign Up
-              </span>
-            </div>
-            {/* <div className="form-group mt-3">
-              <label>Account Number</label>
-              <input
-                type="number"
-                className="form-control mt-1"
-                placeholder="Enter account number"
-                onChange={(e)=>setAccountNumber(e.target.value)}
-              />
-            </div> */}
-            <div className="form-group mt-3">
-              <label>Email address</label>
-              <input
+  const handleEmailChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({email:value, password:formData.password});
+    if(!formData.email.match(emailRegex)){
+      setErrors("Email not valid");
+    } else {
+      setErrors("");
+    }
+  };
+ const handlePasswordChange=(e)=>{
+  const { name, value } = e.target;
+  setFormData({email:formData.email, password:value});
+  if(!formData.password.match(passwordRegex)){
+    setErrors("Password not valid");
+  } else {
+    setErrors("");
+  }
+ }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Implement your validation logic here
+    // For simplicity, we're assuming a basic validation for the password match
+    if (formData.password !== formData.confirmPassword) {
+      setErrors({ confirmPassword: 'Passwords do not match' });
+    } else {
+      // Submit your data to the server or perform further actions here
+      console.log(formData);
+    }
+  };
+
+  return (
+    <Container>
+      <Row className="justify-content-center">
+        <Col md={6}>
+          <h2 className="text-center">Login</h2>
+          <Form onSubmit={handleSubmit}>
+    
+            <Form.Group controlId="email">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+              autocomplete="off"
                 type="email"
-                className="form-control mt-1"
+                name="email"
                 placeholder="Enter email"
+                value={formData.email}
+                onChange={handleEmailChange}
+                required
+                
               />
-            </div>
-            <div className="form-group mt-3">
-              <label>Password</label>
-              <input
+            </Form.Group>
+            <div>{errors}</div>
+
+            <Form.Group controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
                 type="password"
-                className="form-control mt-1"
+                name="password"
                 placeholder="Enter password"
+                value={formData.password}
+                onChange={handlePasswordChange}
+                required
+                autocomplete="off"
               />
-            </div>
-            <div className="form-group mt-3">
-              <label>PAN</label>
-              <input
-                type="text"
-                className="form-control mt-1"
-                placeholder="Enter pan number"
-              />
-            </div>
-            <div className="form-group mt-3">
-              <label>Mobile</label>
-              <input
-                type="number"
-                className="form-control mt-1"
-                placeholder="Enter mobile number"
-              />
-            </div>
-            {/* <div className="form-group mt-3">
-              <label>DOB</label>
-              <input
-                type="date"
-                className="form-control mt-1"
-                placeholder="Enter date"
-              />
-            </div> */}
-            {/* <div className="form-group mt-3">
-              <label> Confirm Password</label>
-              <input
-                type="password"
-                className="form-control mt-1"
-                placeholder="Enter the same password"
-              />
-            </div> */}
-            <div className="d-grid gap-2 mt-3">
-              <button type="submit" className="btn btn-primary" onClick={addUser}>
-                Submit
-              </button>
-            </div>
-            <p className="text-center mt-2">
-              Forgot <a href="#">password?</a>
-            </p>
-          </div>
-        </form>
-      </div>
-    )
-  }
+            </Form.Group>
 
-  return (
-    <div className="Auth-form-container">
-      <form className="Auth-form">
-        <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign In</h3>
-          <div className="text-center">
-            Already registered?{" "}
-            <span className="link-primary" onClick={changeAuthMode}>
-              Sign In
-            </span>
-          </div>
-          <div className="form-group mt-3">
-            <label>Full Name</label>
-            <input
-              type="email"
-              className="form-control mt-1"
-              placeholder="e.g Jane Doe"
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label>Email address</label>
-            <input
-              type="email"
-              className="form-control mt-1"
-              placeholder="Email Address"
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label>Password</label>
-            <input
-              type="password"
-              className="form-control mt-1"
-              placeholder="Password"
-            />
-          </div>
-          <div className="d-grid gap-2 mt-3">
-            <button type="submit" className="btn btn-primary" onClick={loginUser}>
-              Submit
-            </button>
-          </div>
-          <p className="text-center mt-2">
-            Forgot <a href="#">password?</a>
-          </p>
+           
 
-import '../../src/styles/Login.css'
-import {useForm} from "react-hook-form";
-import UserService from '../service/UserService';
 
-function Login() {
-  const{register,handleSubmit,formState:{error}}=useForm();
-  const onSubmit=(data)=>{
-    console.log(data);
-    UserService.login({
-      email: data.email,
-      password: data.password
-    }).then((data)=> console.log(data))
-      .catch((error)=>console.log(error));
-  }
-  return (
-    <div>
-        <p className='title'>Login/Sign-up</p>
-      <form className="App" onSubmit={handleSubmit(onSubmit)}>
-        <input placeholder="Enter your email" type="email" {...register("email",{required:true})}></input>
-        <input placeholder="Enter your password" type="password"{...register("password")}></input>
-        <input placeholder="Login" className='submit' type={"submit"}></input>
-        <div>
-        <span class="psw">First-time user? <a href="#">Sign-up</a></span>
-        <span class="psw">Forgot <a href="#">password?</a></span>
-        </div>
-      </form>
-    </div>
-  )
-}
+            <Button variant="primary" type="submit" block>
+              Sign Up
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
+  );
+};
+
+export default Login;
