@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import '../styles/Login.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -45,41 +46,44 @@ const Login = () => {
     <Container>
       <Row className="justify-content-center">
         <Col md={6}>
-          <h2 className="text-center">Login</h2>
-          <Form onSubmit={handleSubmit}>
-    
-            <Form.Group controlId="email">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-              autocomplete="off"
-                type="email"
-                name="email"
-                placeholder="Enter email"
-                value={formData.email}
-                onChange={handleEmailChange}
-                required
-                
-              />
-            </Form.Group>
-            <div>{errors}</div>
-
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                value={formData.password}
-                onChange={handlePasswordChange}
-                required
-                autocomplete="off"
-              />
-            </Form.Group>
-            <br></br>
-            <Button variant="primary" type="submit" block>
-              Submit
-            </Button>
-          </Form>
+          <h3 className="text-center">Login</h3>
+            <div>
+              <Form onSubmit={handleSubmit} className="Form">
+                <Form.Group controlId="email" autocomplete="off" className='Form-grp'>
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control
+                    autocomplete="off"
+                    type="email"
+                    name="email"
+                    placeholder="Enter email"
+                    value={formData.email}
+                    onChange={handleEmailChange}
+                    required
+                    
+                  />
+                </Form.Group>
+                  <div>{errors}</div>
+                <Form.Group controlId="password"  className='Form-grp'>
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    name="password"
+                    placeholder="Enter password"
+                    value={formData.password}
+                    onChange={handlePasswordChange}
+                    required
+                    autocomplete="off"
+                  />
+                </Form.Group>
+                  <br></br>
+                <div className="my-btn">
+                  <Button variant="primary" type="submit" block>
+                  Submit
+                </Button>
+                </div>
+              </Form>
+            </div>
+          
         </Col>
       </Row>
     </Container>

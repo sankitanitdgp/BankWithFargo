@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import '../styles/OpenAccount.css';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -45,8 +46,8 @@ const SignUp = () => {
       <Row className="justify-content-center">
         <Col md={6}>
           <h2 className="text-center">Open a Savings Account</h2>
-          <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="title">
+          <Form onSubmit={handleSubmit} className='Form'>
+          <Form.Group controlId="title" autocomplete="off" className='Form-grp'>
               <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
@@ -58,7 +59,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="firstName">
+            <Form.Group controlId="firstName" autocomplete="off" className='Form-grp'>
               <Form.Label>First Name</Form.Label>
               <Form.Control
                 type="text"
@@ -70,7 +71,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="lastName">
+            <Form.Group controlId="lastName" autocomplete="off" className='Form-grp'>
               <Form.Label>Last Name</Form.Label>
               <Form.Control
                 type="text"
@@ -82,7 +83,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="dob">
+            <Form.Group controlId="dob" autocomplete="off" className='Form-grp'>
               <Form.Label>DOB</Form.Label>
               <Form.Control
                 type="date"
@@ -94,7 +95,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="fatherName">
+            <Form.Group controlId="fatherName" autocomplete="off" className='Form-grp'>
               <Form.Label>Father's Name</Form.Label>
               <Form.Control
                 type="text"
@@ -106,7 +107,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="accountNumber">
+            <Form.Group controlId="accountNumber" autocomplete="off" className='Form-grp'>
               <Form.Label>Account Number</Form.Label>
               <Form.Control
                 type="number"
@@ -118,7 +119,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="phone">
+            <Form.Group controlId="phone" autocomplete="off" className='Form-grp'>
               <Form.Label>Mobile Number</Form.Label>
               <Form.Control
                 type="number"
@@ -130,7 +131,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="pan">
+            <Form.Group controlId="pan" autocomplete="off" className='Form-grp'>
               <Form.Label>PAN</Form.Label>
               <Form.Control
                 type="number"
@@ -142,7 +143,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="presentAddress">
+            <Form.Group controlId="presentAddress" autocomplete="off" className='Form-grp'>
               <Form.Label>Present Address</Form.Label>
               <Form.Control
                 type="text"
@@ -154,7 +155,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="permanentAddress">
+            <Form.Group controlId="permanentAddress" autocomplete="off" className='Form-grp'>
               <Form.Label>Permanent Address</Form.Label>
               <Form.Control
                 type="text"
@@ -166,7 +167,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="occupation">
+            <Form.Group controlId="occupation" autocomplete="off" className='Form-grp'>
               <Form.Label>Occupation Details</Form.Label>
               <Form.Control
                 type="text"
@@ -178,7 +179,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="grossIncome">
+            <Form.Group controlId="grossIncome" autocomplete="off" className='Form-grp'>
               <Form.Label>Gross Annual Income</Form.Label>
               <Form.Control
                 type="number"
@@ -192,9 +193,12 @@ const SignUp = () => {
             <br></br>
             <span>
             <div style={{ display: "flex" }}>
-            <Button variant="primary" type="submit" block>
+              <div className='my-btn'>
+              <Button variant="primary" type="submit" block>
               Create Account
             </Button>
+              </div>
+            
             </div>
             </span>
           </Form>

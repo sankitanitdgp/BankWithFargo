@@ -38,10 +38,11 @@ const SignUp = () => {
       <Row className="justify-content-center">
         <Col md={6}>
           <h2 className="text-center">Sign Up</h2>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="username">
+          <Form onSubmit={handleSubmit}  className='Form'>
+            <Form.Group controlId="username" autocomplete="off" className='Form-grp'>
               <Form.Label>Account Number</Form.Label>
               <Form.Control
+                autocomplete="off"
                 type="text"
                 name="accountNumber"
                 placeholder="Enter account number"
@@ -51,9 +52,10 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="email">
+            <Form.Group controlId="email" autocomplete="off" className='Form-grp'>
               <Form.Label>Email address</Form.Label>
               <Form.Control
+                autocomplete="off"
                 type="email"
                 name="email"
                 placeholder="Enter email"
@@ -63,7 +65,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="password">
+            <Form.Group controlId="password" autocomplete="off" className='Form-grp'>
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
@@ -75,7 +77,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="confirmPassword">
+            <Form.Group controlId="confirmPassword" autocomplete="off" className='Form-grp'>
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control
                 type="password"
@@ -90,7 +92,7 @@ const SignUp = () => {
               )}
             </Form.Group>
 
-            <Form.Group controlId="mpin">
+            <Form.Group controlId="mpin" autocomplete="off" className='Form-grp'>
               <Form.Label>MPIN</Form.Label>
               <Form.Control
                 type="number"
@@ -102,7 +104,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="confirmMpin">
+            <Form.Group controlId="confirmMpin" autocomplete="off" className='Form-grp'>
               <Form.Label>Confirm MPIN</Form.Label>
               <Form.Control
                 type="number"
@@ -114,9 +116,12 @@ const SignUp = () => {
               />
             </Form.Group>
             <br></br>
+            <div className='my-btn'>
             <Button variant="primary" type="submit" block>
               Sign Up
             </Button>
+            </div>
+            
           </Form>
         </Col>
       </Row>
