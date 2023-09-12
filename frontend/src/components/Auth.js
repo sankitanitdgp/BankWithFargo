@@ -142,27 +142,27 @@ export default function (props) {
             </span>
           </div>
           <div className="form-group mt-3">
-            <label>Full Name</label>
-            <input
-              type="email"
-              className="form-control mt-1"
-              placeholder="e.g Jane Doe"
-            />
+              <label>Account Number</label>
+              <input
+                type="number"
+                className="form-control mt-1"
+                placeholder="Enter account number"
+              />
           </div>
           <div className="form-group mt-3">
-            <label>Email address</label>
-            <input
-              type="email"
-              className="form-control mt-1"
-              placeholder="Email Address"
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label>Password</label>
+            <label>Set Login Password</label>
             <input
               type="password"
               className="form-control mt-1"
               placeholder="Password"
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label> Confirm Password</label>
+            <input
+              type="password"
+              className="form-control mt-1"
+              placeholder="Enter the same password"
             />
           </div>
           <div className="d-grid gap-2 mt-3">
