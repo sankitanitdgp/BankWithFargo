@@ -8,26 +8,34 @@ const Login = () => {
     password: ''
   });
 
-  const [errors, setErrors] = useState("");
+  // const [errors, setErrors] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z]+\.[A-Za-z]{2,}$/i;
-  const passwordRegex= /^[A-Za-z0-9]{8,}$/i;
+  const passwordRegex= /^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/i;
 
   const handleEmailChange = (e) => {
     const { name, value } = e.target;
     setFormData({email:value, password:formData.password});
     if(!formData.email.match(emailRegex)){
-      setErrors("Email not valid");
+      setEmailError("Invalid email!");
     } else {
-      setErrors("");
+      setEmailError("");
     }
   };
  const handlePasswordChange=(e)=>{
   const { name, value } = e.target;
   setFormData({email:formData.email, password:value});
-  if(!formData.password.match(passwordRegex)){
-    setErrors("Password not valid");
+  // if(!formData.password.match(passwordRegex)){
+  //   setPasswordError("Invalid Password!");
+  // } else {
+  //   setPasswordError("");
+  // }
+
+  if (formData.password.length < 6) {
+    setPasswordError("Password must be at least 6 characters long");
   } else {
-    setErrors("");
+    setPasswordError("");
   }
  }
   const handleSubmit = (e) => {
@@ -35,7 +43,7 @@ const Login = () => {
     // Implement your validation logic here
     // For simplicity, we're assuming a basic validation for the password match
     if (formData.password !== formData.confirmPassword) {
-      setErrors({ confirmPassword: 'Passwords do not match' });
+      setPasswordError({ confirmPassword: 'Passwords do not match' });
     } else {
       // Submit your data to the server or perform further actions here
       console.log(formData);
@@ -62,7 +70,7 @@ const Login = () => {
                     
                   />
                 </Form.Group>
-                  <div>{errors}</div>
+                  <div className='form-errors'>{emailError}</div>
                 <Form.Group controlId="password"  className='Form-grp'>
                   <Form.Label>Password</Form.Label>
                   <Form.Control
@@ -75,6 +83,7 @@ const Login = () => {
                     autocomplete="off"
                   />
                 </Form.Group>
+                <div className='form-errors'>{passwordError}</div>
                   <br></br>
                 <div className="my-btn">
                   <Button variant="primary" type="submit" block>

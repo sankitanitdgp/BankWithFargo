@@ -9,9 +9,10 @@ const SignUp = () => {
     lastName:'',
     dob:'',
     fatherName:'',
-    accountNumber: '',
     phones:'',
     pan:'',
+    mpin:'',
+    confirmMpin:'',
     email: '',
     presentAddress:'',
     permanentAddress:'',
@@ -51,7 +52,7 @@ const SignUp = () => {
               <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
-                name="Title"
+                name="title"
                 placeholder="Miss/Mr./Mrs."
                 value={formData.title}
                 onChange={handleChange}
@@ -89,7 +90,7 @@ const SignUp = () => {
                 type="date"
                 name="dob"
                 placeholder=""
-                value={formData.email}
+                value={formData.dob}
                 onChange={handleChange}
                 required
               />
@@ -102,18 +103,6 @@ const SignUp = () => {
                 name="fatherName"
                 placeholder="Enter your father's name"
                 value={formData.fatherName}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group controlId="accountNumber" autocomplete="off" className='Form-grp'>
-              <Form.Label>Account Number</Form.Label>
-              <Form.Control
-                type="number"
-                name="accountNumber"
-                placeholder="Enter your Account Number"
-                value={formData.accountNumber}
                 onChange={handleChange}
                 required
               />
@@ -138,6 +127,30 @@ const SignUp = () => {
                 name="pan"
                 placeholder="Enter your PAN"
                 value={formData.pan}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="mpin" autocomplete="off" className='Form-grp'>
+              <Form.Label>MPIN</Form.Label>
+              <Form.Control
+                type="number"
+                name="mpin"
+                placeholder="Enter MPIN"
+                value={formData.mpin}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="confirmMpin" autocomplete="off" className='Form-grp'>
+              <Form.Label>Confirm MPIN</Form.Label>
+              <Form.Control
+                type="number"
+                name="confirmMpin"
+                placeholder="Confirm MPIN"
+                value={formData.confirmMpin}
                 onChange={handleChange}
                 required
               />
@@ -168,7 +181,7 @@ const SignUp = () => {
             </Form.Group>
 
             <Form.Group controlId="occupation" autocomplete="off" className='Form-grp'>
-              <Form.Label>Occupation Details</Form.Label>
+              <Form.Label>Occupation Type</Form.Label>
               <Form.Control
                 type="text"
                 name="occupation"
