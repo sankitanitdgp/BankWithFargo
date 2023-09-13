@@ -9,9 +9,10 @@ const SignUp = () => {
     lastName:'',
     dob:'',
     fatherName:'',
-    accountNumber: '',
     phones:'',
     pan:'',
+    mpin:'',
+    confirmMpin:'',
     email: '',
     presentAddress:'',
     permanentAddress:'',
@@ -126,6 +127,30 @@ const SignUp = () => {
                 name="pan"
                 placeholder="Enter your PAN"
                 value={formData.pan}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="mpin" autocomplete="off" className='Form-grp'>
+              <Form.Label>MPIN</Form.Label>
+              <Form.Control
+                type="number"
+                name="mpin"
+                placeholder="Enter MPIN"
+                value={formData.mpin}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="confirmMpin" autocomplete="off" className='Form-grp'>
+              <Form.Label>Confirm MPIN</Form.Label>
+              <Form.Control
+                type="number"
+                name="confirmMpin"
+                placeholder="Confirm MPIN"
+                value={formData.confirmMpin}
                 onChange={handleChange}
                 required
               />

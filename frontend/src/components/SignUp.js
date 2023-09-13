@@ -39,7 +39,7 @@ const SignUp = () => {
         <Col md={6}>
           <h2 className="text-center">Sign Up</h2>
           <Form onSubmit={handleSubmit}  className='Form'>
-            <Form.Group controlId="username" autocomplete="off" className='Form-grp'>
+            {/* <Form.Group controlId="username" autocomplete="off" className='Form-grp'>
               <Form.Label>Account Number</Form.Label>
               <Form.Control
                 autocomplete="off"
@@ -50,7 +50,7 @@ const SignUp = () => {
                 onChange={handleChange}
                 required
               />
-            </Form.Group>
+            </Form.Group> */}
 
             <Form.Group controlId="email" autocomplete="off" className='Form-grp'>
               <Form.Label>Email address</Form.Label>
@@ -92,29 +92,6 @@ const SignUp = () => {
               )}
             </Form.Group>
 
-            <Form.Group controlId="mpin" autocomplete="off" className='Form-grp'>
-              <Form.Label>MPIN</Form.Label>
-              <Form.Control
-                type="number"
-                name="mpin"
-                placeholder="Enter MPIN"
-                value={formData.mpin}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group controlId="confirmMpin" autocomplete="off" className='Form-grp'>
-              <Form.Label>Confirm MPIN</Form.Label>
-              <Form.Control
-                type="number"
-                name="confirmMpin"
-                placeholder="Confirm MPIN"
-                value={formData.confirmMpin}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
             <br></br>
             <div className='my-btn'>
             <Button variant="primary" type="submit" block>
