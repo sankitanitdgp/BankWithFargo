@@ -13,4 +13,18 @@ const UserService = {
     }
 };
 
+
+const UserRegisterService = {
+    async register(userData){
+        try{
+            const response=await axios.post(`${BASE_URL}/addUser`, userData);
+            return response.data;
+        } catch(error){
+            throw error;
+        }
+    }
+};
+
+export {UserService, UserRegisterService};
 export default UserService;
+
