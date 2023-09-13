@@ -67,11 +67,10 @@ const Login = () => {
                     value={formData.email}
                     onChange={handleEmailChange}
                     required
-                    
                   />
                 </Form.Group>
                   <div className='form-errors'>{emailError}</div>
-                <Form.Group controlId="password"  className='Form-grp'>
+                <Form.Group controlId="password" autocomplete="off"  className='Form-grp'>
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"

@@ -34,7 +34,7 @@ const SignUp = () => {
     e.preventDefault();
     // Implement your validation logic here
     // For simplicity, we're assuming a basic validation for the password match
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.mpin !== formData.confirmMpin) {
       setErrors({ confirmPassword: 'Passwords do not match' });
     } else {
       // Submit your data to the server or perform further actions here
@@ -111,7 +111,7 @@ const SignUp = () => {
             <Form.Group controlId="phone" autocomplete="off" className='Form-grp'>
               <Form.Label>Mobile Number</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 name="phoneNumber"
                 placeholder="Enter your Mobile no."
                 value={formData.phoneNumber}
@@ -123,7 +123,7 @@ const SignUp = () => {
             <Form.Group controlId="pan" autocomplete="off" className='Form-grp'>
               <Form.Label>PAN</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 name="pan"
                 placeholder="Enter your PAN"
                 value={formData.pan}
@@ -135,7 +135,7 @@ const SignUp = () => {
             <Form.Group controlId="mpin" autocomplete="off" className='Form-grp'>
               <Form.Label>MPIN</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 name="mpin"
                 placeholder="Enter MPIN"
                 value={formData.mpin}
@@ -147,7 +147,7 @@ const SignUp = () => {
             <Form.Group controlId="confirmMpin" autocomplete="off" className='Form-grp'>
               <Form.Label>Confirm MPIN</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 name="confirmMpin"
                 placeholder="Confirm MPIN"
                 value={formData.confirmMpin}
@@ -174,7 +174,7 @@ const SignUp = () => {
                 type="text"
                 name="permanentAddress"
                 placeholder="Enter your Permanent Address"
-                value={formData.presentAddress}
+                value={formData.permanentAddress}
                 onChange={handleChange}
                 required
               />
@@ -195,7 +195,7 @@ const SignUp = () => {
             <Form.Group controlId="grossIncome" autocomplete="off" className='Form-grp'>
               <Form.Label>Gross Annual Income</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 name="grossIncome"
                 placeholder="Enter your gross annual income in INR"
                 value={formData.grossIncome}
