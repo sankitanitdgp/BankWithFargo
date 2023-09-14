@@ -1,8 +1,6 @@
 package com.bankwithfargo.controllers;
 
 import com.bankwithfargo.dto.AccountRequestDTO;
-import com.bankwithfargo.model.Account;
-import com.bankwithfargo.model.User;
 import com.bankwithfargo.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,7 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
-    @RequestMapping(value="/openAccount", method=POST, produces = "application/json")
+    @RequestMapping(value = "/openAccount", method = POST, produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> openAccount(@Valid @RequestBody AccountRequestDTO accountRequestDTO) {
         return new ResponseEntity<Object>(accountService.openAccount(accountRequestDTO), HttpStatus.CREATED);

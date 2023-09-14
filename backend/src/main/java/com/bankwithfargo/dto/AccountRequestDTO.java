@@ -24,5 +24,6 @@ public class AccountRequestDTO {
     private String occupationType;
     private Long income;
     private String email;
+    private int mpin;
 
 }
