@@ -7,6 +7,7 @@ import Home from './components/Home';
 import OpenAccount from './components/OpenAccount';
 import "bootstrap/dist/css/bootstrap.min.css"
 import Login from './components/Login';
+import TransactionHistory from './components/TransactionHistory';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="openAccount" element={<OpenAccount />} />
+          <Route path="transactionHistory" element={<TransactionHistory />} />
         </Route>
       </Routes>
       </BrowserRouter>
