@@ -84,14 +84,19 @@ const Login = () => {
                 </Form.Group>
                 <div className='form-errors'>{passwordError}</div>
                   <br></br>
+                <span>
+                <div class="redirect">First-time user? <a href="/signup">Sign-up</a></div>
+                <div class="pwd-redirect">Forgot <a href="#">password?</a></div>
+                </span>
+                <br></br>
+                <br></br>
                 <div className="my-btn">
                   <Button variant="primary" type="submit" block>
                   Submit
                 </Button>
-                </div>
+                </div>         
               </Form>
-            </div>
-          
+            </div>          
         </Col>
       </Row>
     </Container>

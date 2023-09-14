@@ -3,7 +3,6 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    accountNumber: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -15,7 +14,6 @@ const SignUp = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z]+\.[A-Za-z]{2,}$/i;
-  const passwordRegex= /^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/i;
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -94,7 +92,6 @@ const SignUp = () => {
               />
             </Form.Group>
             <div className='form-errors'>{passwordError}</div>
-                  <br></br>
 
             <Form.Group controlId="confirmPassword" autocomplete="off" className='Form-grp'>
               <Form.Label>Confirm Password</Form.Label>
