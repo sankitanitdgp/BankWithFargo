@@ -34,12 +34,12 @@ public class Account {
 
     @Column(name = "pan", nullable = false)
     @NotNull
-    @Pattern(regexp="[A-Z]{5}[0-9]{4}[A-Z]$", message="Invalid PAN number")
+//    @Pattern(regexp="[A-Z]{5}[0-9]{4}[A-Z]$", message="Invalid PAN number")
     private String pan;
 
     @Column(name = "phone", nullable = false)
     @NotNull
-    @Pattern(regexp="[0-9]{10}", message="Invalid phone number. Please provide a 10 digit number.")
+//    @Pattern(regexp="[0-9]{10}", message="Invalid phone number. Please provide a 10 digit number.")
     private String phone;
 
     @Column(name="present_address", nullable = false)
@@ -47,6 +47,8 @@ public class Account {
 
     @Column(name="permanent_address", nullable = false)
     private String permanentAddress;
+
+    private String email;
 
     @Column(name = "balance", nullable = false)
     private Double balance;
@@ -65,6 +67,9 @@ public class Account {
 
     @Column(name="income", nullable = false)
     private Long income;
+
+    @Column(name="mpin", nullable = false)
+    private int mpin;
 
     @NotNull
     @ManyToOne

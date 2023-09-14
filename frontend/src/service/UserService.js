@@ -2,10 +2,10 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:8080";
 
-const UserService = {
+const UserLoginService = {
     async login(userData){
         try{
-            const response=await axios.post(`${BASE_URL}/verifyUser`, userData);
+            const response=await axios.post(`${BASE_URL}/loginUser`, userData);
             return response.data;
         } catch(error){
             throw error;
@@ -25,6 +25,5 @@ const UserRegisterService = {
     }
 };
 
-export {UserService, UserRegisterService};
-export default UserService;
+export {UserLoginService, UserRegisterService};
 
