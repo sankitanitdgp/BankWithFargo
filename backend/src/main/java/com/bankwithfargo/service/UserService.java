@@ -44,9 +44,7 @@ public class UserService {
 
     @Transactional
     public User createUser(UserSignupRequestDTO user){
-        if(!user.getPassword().equals(user.getConfirmPassword())){
-            System.out.println("passwords do not match");
-        } else{
+
             try{
                 User newUser= new User();
                 BeanUtils.copyProperties(user,newUser);
@@ -54,7 +52,6 @@ public class UserService {
             } catch(Exception e){
                 System.out.println(e.getMessage());
             }
-        }
         return null;
     }
 

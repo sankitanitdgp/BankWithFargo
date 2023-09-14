@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { UserRegisterService } from '../service/UserService';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const SignUp = () => {
   };
   const handleEmailChange = (e) => {
     const { name, value } = e.target;
-    setFormData({email:value, password:formData.password});
+    setFormData({email:value, password:formData.password,confirmPassword:formData.confirmPassword});
     if(!formData.email.match(emailRegex)){
       setEmailError("Invalid email!");
     } else {
@@ -37,7 +38,7 @@ const SignUp = () => {
 
   const handlePasswordChange=(e)=>{
     const { name, value } = e.target;
-    setFormData({email:formData.email, password:value});
+    setFormData({email:formData.email, password:value,confirmPassword:formData.confirmPassword});
     // if(!formData.password.match(passwordRegex)){
     //   setPasswordError("Invalid Password!");
     // } else {
@@ -51,6 +52,22 @@ const SignUp = () => {
     }
    }
 
+   const handleConfirmPassword=(e)=>{
+    const { name, value } = e.target;
+    setFormData({...formData, confirmPassword:value});
+    // if(!formData.password.match(passwordRegex)){
+    //   setPasswordError("Invalid Password!");
+    // } else {
+    //   setPasswordError("");
+    // }
+  
+    if (formData.password.length < 8) {
+      setPasswordError("Password must be at least 8 characters long");
+    } else {
+      setPasswordError("");
+    }
+   }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Implement your validation logic here
@@ -59,7 +76,12 @@ const SignUp = () => {
       setErrors({ confirmPassword: 'Passwords do not match' });
     } else {
       // Submit your data to the server or perform further actions here
+      setErrors("")
       console.log(formData);
+      UserRegisterService.register({
+        email: formData.email,
+        password: formData.password
+      }).then(res=>console.log(res))
     }
   };
 
@@ -103,7 +125,7 @@ const SignUp = () => {
                 name="confirmPassword"
                 placeholder="Confirm password"
                 value={formData.confirmPassword}
-                onChange={handleChange}
+                onChange={handleConfirmPassword}
                 required
               />
               {errors.confirmPassword && (

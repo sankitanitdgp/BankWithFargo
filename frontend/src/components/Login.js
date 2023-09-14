@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import '../styles/Login.css';
+import { UserLoginService } from '../service/UserService';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -40,14 +41,11 @@ const Login = () => {
  }
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Implement your validation logic here
-    // For simplicity, we're assuming a basic validation for the password match
-    if (formData.password !== formData.confirmPassword) {
-      setPasswordError({ confirmPassword: 'Passwords do not match' });
-    } else {
+   
       // Submit your data to the server or perform further actions here
       console.log(formData);
-    }
+      UserLoginService.login(formData).then(res=>console.log(res))
+    
   };
 
   return (
