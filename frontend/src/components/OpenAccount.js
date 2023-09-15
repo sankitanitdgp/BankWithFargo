@@ -107,7 +107,6 @@ const SignUp = () => {
       console.log(formData);
       OpenAccountService.openAccount(formData).then((res) => console.log(res));
       setSuccess("visible");
-
     }
   };
 

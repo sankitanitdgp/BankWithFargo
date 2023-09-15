@@ -7,9 +7,13 @@ const Home = () => {
   return (
     <>
       <Nav />
-      {/* <div className="home-div">
-        <h3>Welcome to Bank With Fargo!</h3>
-      </div> */}
+      {
+        //   <div className="home-div">
+        //     <h3>
+        //       <center>Welcome to Bank With Fargo!</center>
+        //     </h3>
+        //   </div>
+      }
       <Outlet />
     </>
   );

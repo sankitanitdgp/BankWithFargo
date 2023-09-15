@@ -15,18 +15,39 @@ function Dashboard() {
 
   return (
     <>
-      <div>
-        <Link to="/transactions">
-          <Card
-            className="dashboard-card card-img-"
-            onClick={handleOnClickTransactions}
-          >
-            <Card.Body>View Transactions</Card.Body>
-          </Card>
-        </Link>
-        <Card className="dashboard-card" onClick={handleOnClickBalance}>
-          <Card.Body>Check Balance</Card.Body>
+      <div className="cards-body">
+        <Card
+          className="dashboard-card card-title"
+          onClick={handleOnClickTransactions}
+        >
+          <Card.Body>
+            <center>
+              <a href="/transactions">View Transactions</a>
+            </center>
+          </Card.Body>
         </Card>
+
+        <Card
+          className="dashboard-card card-title"
+          onClick={handleOnClickBalance}
+        >
+          <Card.Body>
+            <center>Check Balance</center>
+          </Card.Body>
+        </Card>
+
+        <Card
+          className="dashboard-card card-title"
+          onClick={handleOnClickTransactions}
+        >
+          <Card.Body>
+            <center>
+              <i class="pi pi-check"></i>
+              <a href="/openAccount">Open a Savings Account</a>
+            </center>
+          </Card.Body>
+        </Card>
+
         {show && <ViewBalanceModal show={show} setShow={setShow} />}
       </div>
     </>

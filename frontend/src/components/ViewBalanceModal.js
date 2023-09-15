@@ -15,7 +15,7 @@ function ViewBalanceModal(props) {
         </Modal.Header>
         <Modal.Body>Your balance is ...</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" color="blue" onClick={handleClose}>
             Close
           </Button>
         </Modal.Footer>
