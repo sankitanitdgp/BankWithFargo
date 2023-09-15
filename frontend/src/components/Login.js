@@ -1,51 +1,57 @@
-import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import '../styles/Login.css';
-import { UserLoginService } from '../service/UserService';
+import React, { useState } from "react";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import "../styles/Login.css";
+import { UserLoginService } from "../service/UserService";
+import { Link, redirect } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
 
   // const [errors, setErrors] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [success, setSuccess] = useState("hidden");
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z]+\.[A-Za-z]{2,}$/i;
-  const passwordRegex= /^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/i;
+  const cookies = new Cookies();
 
   const handleEmailChange = (e) => {
     const { name, value } = e.target;
-    setFormData({email:value, password:formData.password});
-    if(!formData.email.match(emailRegex)){
+    setFormData({ email: value, password: formData.password });
+    if (!formData.email.match(emailRegex)) {
       setEmailError("Invalid email!");
     } else {
       setEmailError("");
     }
   };
- const handlePasswordChange=(e)=>{
-  const { name, value } = e.target;
-  setFormData({email:formData.email, password:value});
-  // if(!formData.password.match(passwordRegex)){
-  //   setPasswordError("Invalid Password!");
-  // } else {
-  //   setPasswordError("");
-  // }
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ email: formData.email, password: value });
+    // if(!formData.password.match(passwordRegex)){
+    //   setPasswordError("Invalid Password!");
+    // } else {
+    //   setPasswordError("");
+    // }
 
-  if (formData.password.length < 6) {
-    setPasswordError("Password must be at least 6 characters long");
-  } else {
-    setPasswordError("");
-  }
- }
+    if (value.length < 8) {
+      setPasswordError("Password must be at least 8 characters long");
+    } else {
+      setPasswordError("");
+    }
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-   
-      // Submit your data to the server or perform further actions here
-      console.log(formData);
-      UserLoginService.login(formData).then(res=>console.log(res))
-    
+
+    // Submit your data to the server or perform further actions here
+    console.log(formData);
+    UserLoginService.login(formData).then((res) => {
+      console.log(res);
+      cookies.set("email", formData.email, { path: "/" });
+    });
+    setSuccess("visible");
   };
 
   return (
@@ -53,50 +59,65 @@ const Login = () => {
       <Row className="justify-content-center">
         <Col md={6}>
           <h3 className="text-center">Login</h3>
-            <div>
-              <Form onSubmit={handleSubmit} className="Form">
-                <Form.Group controlId="email" autocomplete="off" className='Form-grp'>
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    autocomplete="off"
-                    type="email"
-                    name="email"
-                    placeholder="Enter email"
-                    value={formData.email}
-                    onChange={handleEmailChange}
-                    required
-                  />
-                </Form.Group>
-                  <div className='form-errors'>{emailError}</div>
-                <Form.Group controlId="password" autocomplete="off"  className='Form-grp'>
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    name="password"
-                    placeholder="Enter password"
-                    value={formData.password}
-                    onChange={handlePasswordChange}
-                    required
-                    autocomplete="off"
-                  />
-                </Form.Group>
-                <div className='form-errors'>{passwordError}</div>
-                  <br></br>
-                <span>
-                <div class="redirect">First-time user? <a href="/signup">Sign-up</a></div>
-                <div class="pwd-redirect">Forgot <a href="#">password?</a></div>
-                </span>
-                <br></br>
-                <br></br>
-                <div className="my-btn">
-                  <Button variant="primary" type="submit" block>
+          <div>
+            <Form onSubmit={handleSubmit} className="Form">
+              <Form.Group
+                controlId="email"
+                autocomplete="off"
+                className="Form-grp"
+              >
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  autocomplete="off"
+                  type="email"
+                  name="email"
+                  placeholder="Enter email"
+                  value={formData.email}
+                  onChange={handleEmailChange}
+                  required
+                />
+              </Form.Group>
+              <div className="form-errors">{emailError}</div>
+              <Form.Group
+                controlId="password"
+                autocomplete="off"
+                className="Form-grp"
+              >
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  name="password"
+                  placeholder="Enter password"
+                  value={formData.password}
+                  onChange={handlePasswordChange}
+                  required
+                  autocomplete="off"
+                />
+              </Form.Group>
+              <div className="form-errors">{passwordError}</div>
+              <br></br>
+              <span>
+                <div class="redirect">
+                  First-time user? <a href="/signup">Sign-up</a>
+                </div>
+                <div class="pwd-redirect">
+                  Forgot <a href="#">password?</a>
+                </div>
+              </span>
+              <br></br>
+              <br></br>
+              <div className="my-btn">
+                <Button variant="primary" type="submit" block>
                   Submit
                 </Button>
-                </div>         
-              </Form>
-            </div>          
+              </div>
+            </Form>
+          </div>
         </Col>
       </Row>
+      <div className="redirect" style={{ visibility: success }}>
+        Login successful <Link to="/dashboard">go to dashboard</Link>{" "}
+      </div>
     </Container>
   );
 };

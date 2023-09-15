@@ -1,4 +1,4 @@
-import {Container, Nav, Navbar, NavDropdown} from 'react-bootstrap'
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
 function NavMe() {
   return (
@@ -12,7 +12,7 @@ function NavMe() {
             <Nav.Link href="/login">Login</Nav.Link>
             <Nav.Link href="/signup">Signup</Nav.Link>
             <Nav.Link href="/openAccount">Open Account</Nav.Link>
-            <Nav.Link href="/transactionHistory">Transactions</Nav.Link>
+            <Nav.Link href="/dashboard">Dashboard</Nav.Link>
             {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">

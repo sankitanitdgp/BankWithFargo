@@ -1,66 +1,67 @@
-import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import '../styles/OpenAccount.css';
-import { OpenAccountService } from '../service/AccountService';
+import React, { useState } from "react";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import "../styles/OpenAccount.css";
+import { OpenAccountService } from "../service/AccountService";
+import { Link, redirect } from "react-router-dom";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    title:'',
-    firstName:'',
-    lastName:'',
-    dob:'',
-    fatherName:'',
-    phone:'',
-    pan:'',
-    mpin:'',
-    email: '',
-    presentAddress:'',
-    permanentAddress:'',
-    occupationType:'',
-    income:''
+    title: "",
+    firstName: "",
+    lastName: "",
+    dob: "",
+    fatherName: "",
+    phone: "",
+    pan: "",
+    mpin: "",
+    email: "",
+    presentAddress: "",
+    permanentAddress: "",
+    occupationType: "",
+    income: "",
   });
 
-  const [confirmMpin, setConfirmMpin]=useState('');
+  const [confirmMpin, setConfirmMpin] = useState("");
   const [errors, setErrors] = useState({});
-
+  const [success, setSuccess] = useState("hidden");
   const handleTitleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({...formData,title: value});
+    setFormData({ ...formData, title: value });
   };
 
   const handleFirstNameChange = (e) => {
     const { name, value } = e.target;
-    setFormData({...formData,firstName: value});
+    setFormData({ ...formData, firstName: value });
   };
 
   const handleLastNameChange = (e) => {
     const { name, value } = e.target;
-    setFormData({...formData,lastName: value});
+    setFormData({ ...formData, lastName: value });
   };
 
   const handleDateOfBirth = (e) => {
     const { name, value } = e.target;
-    setFormData({...formData,dob: value});
+    setFormData({ ...formData, dob: value });
   };
 
   const handleFatherName = (e) => {
     const { name, value } = e.target;
-    setFormData({...formData,fatherName: value});
+    setFormData({ ...formData, fatherName: value });
   };
 
   const handlePhone = (e) => {
     const { name, value } = e.target;
-    setFormData({...formData,phone: value});
+    setFormData({ ...formData, phone: value });
   };
 
   const handlePAN = (e) => {
     const { name, value } = e.target;
-    setFormData({...formData,pan: value});
+    setFormData({ ...formData, pan: value });
   };
 
   const handleMPIN = (e) => {
     const { name, value } = e.target;
-    setFormData({...formData,mpin: value});
+    setFormData({ ...formData, mpin: value });
   };
 
   const handleConfirmMPIN = (e) => {
@@ -70,27 +71,27 @@ const SignUp = () => {
 
   const handleEmail = (e) => {
     const { name, value } = e.target;
-    setFormData({...formData,email: value});
+    setFormData({ ...formData, email: value });
   };
 
   const handlePresentAddress = (e) => {
     const { name, value } = e.target;
-    setFormData({...formData,presentAddress: value});
+    setFormData({ ...formData, presentAddress: value });
   };
 
   const handlePermanentAddress = (e) => {
     const { name, value } = e.target;
-    setFormData({...formData,permanentAddress: value});
+    setFormData({ ...formData, permanentAddress: value });
   };
 
-  const handleOccupationType= (e) => {
+  const handleOccupationType = (e) => {
     const { name, value } = e.target;
-    setFormData({...formData,occupationType: value});
+    setFormData({ ...formData, occupationType: value });
   };
 
   const handleIncome = (e) => {
     const { name, value } = e.target;
-    setFormData({...formData,income: value});
+    setFormData({ ...formData, income: value });
   };
 
   const handleSubmit = (e) => {
@@ -98,14 +99,19 @@ const SignUp = () => {
     // Implement your validation logic here
     // For simplicity, we're assuming a basic validation for the password match
     if (formData.mpin !== confirmMpin) {
-      setErrors({ confirmPassword: 'Passwords do not match' });
+      setErrors({ confirmPassword: "Passwords do not match" });
 
       console.log("hello");
     } else {
       // Submit your data to the server or perform further actions here
       console.log(formData);
+<<<<<<< HEAD
+      OpenAccountService.openAccount(formData).then((res) => console.log(res));
+      setSuccess("visible");
+=======
       OpenAccountService.openAccount
       (formData).then(res=>console.log(res))
+>>>>>>> 4e06b9ea987ac84e08bd3d078b216c673bc92b32
     }
   };
 
@@ -114,8 +120,12 @@ const SignUp = () => {
       <Row className="justify-content-center">
         <Col md={6}>
           <h2 className="text-center">Open a Savings Account</h2>
-          <Form onSubmit={handleSubmit} className='Form'>
-          <Form.Group controlId="title" autocomplete="off" className='Form-grp'>
+          <Form onSubmit={handleSubmit} className="Form">
+            <Form.Group
+              controlId="title"
+              autocomplete="off"
+              className="Form-grp"
+            >
               <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
@@ -127,7 +137,11 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="firstName" autocomplete="off" className='Form-grp'>
+            <Form.Group
+              controlId="firstName"
+              autocomplete="off"
+              className="Form-grp"
+            >
               <Form.Label>First Name</Form.Label>
               <Form.Control
                 type="text"
@@ -139,7 +153,11 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="lastName" autocomplete="off" className='Form-grp'>
+            <Form.Group
+              controlId="lastName"
+              autocomplete="off"
+              className="Form-grp"
+            >
               <Form.Label>Last Name</Form.Label>
               <Form.Control
                 type="text"
@@ -151,7 +169,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="dob" autocomplete="off" className='Form-grp'>
+            <Form.Group controlId="dob" autocomplete="off" className="Form-grp">
               <Form.Label>DOB</Form.Label>
               <Form.Control
                 type="date"
@@ -163,7 +181,11 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="fatherName" autocomplete="off" className='Form-grp'>
+            <Form.Group
+              controlId="fatherName"
+              autocomplete="off"
+              className="Form-grp"
+            >
               <Form.Label>Father's Name</Form.Label>
               <Form.Control
                 type="text"
@@ -175,7 +197,11 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="email" autocomplete="off" className='Form-grp'>
+            <Form.Group
+              controlId="email"
+              autocomplete="off"
+              className="Form-grp"
+            >
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="text"
@@ -187,7 +213,11 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="phone" autocomplete="off" className='Form-grp'>
+            <Form.Group
+              controlId="phone"
+              autocomplete="off"
+              className="Form-grp"
+            >
               <Form.Label>Mobile Number</Form.Label>
               <Form.Control
                 type="text"
@@ -199,7 +229,7 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="pan" autocomplete="off" className='Form-grp'>
+            <Form.Group controlId="pan" autocomplete="off" className="Form-grp">
               <Form.Label>PAN</Form.Label>
               <Form.Control
                 type="text"
@@ -211,7 +241,11 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="mpin" autocomplete="off" className='Form-grp'>
+            <Form.Group
+              controlId="mpin"
+              autocomplete="off"
+              className="Form-grp"
+            >
               <Form.Label>MPIN</Form.Label>
               <Form.Control
                 type="text"
@@ -223,7 +257,11 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="confirmMpin" autocomplete="off" className='Form-grp'>
+            <Form.Group
+              controlId="confirmMpin"
+              autocomplete="off"
+              className="Form-grp"
+            >
               <Form.Label>Confirm MPIN</Form.Label>
               <Form.Control
                 type="text"
@@ -235,7 +273,11 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="presentAddress" autocomplete="off" className='Form-grp'>
+            <Form.Group
+              controlId="presentAddress"
+              autocomplete="off"
+              className="Form-grp"
+            >
               <Form.Label>Present Address</Form.Label>
               <Form.Control
                 type="text"
@@ -247,7 +289,11 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="permanentAddress" autocomplete="off" className='Form-grp'>
+            <Form.Group
+              controlId="permanentAddress"
+              autocomplete="off"
+              className="Form-grp"
+            >
               <Form.Label>Permanent Address</Form.Label>
               <Form.Control
                 type="text"
@@ -259,7 +305,11 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="occupationType" autocomplete="off" className='Form-grp'>
+            <Form.Group
+              controlId="occupationType"
+              autocomplete="off"
+              className="Form-grp"
+            >
               <Form.Label>Occupation Type</Form.Label>
               <Form.Control
                 type="text"
@@ -271,7 +321,11 @@ const SignUp = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="income" autocomplete="off" className='Form-grp'>
+            <Form.Group
+              controlId="income"
+              autocomplete="off"
+              className="Form-grp"
+            >
               <Form.Label>Gross Annual Income</Form.Label>
               <Form.Control
                 type="text"
@@ -284,17 +338,20 @@ const SignUp = () => {
             </Form.Group>
             <br></br>
             <span>
-            <div style={{ display: "flex" }}>
-              <div className='my-btn'>
-              <Button variant="primary" type="submit" block>
-              Create Account
-            </Button>
+              <div style={{ display: "flex" }}>
+                <div className="my-btn">
+                  <Button variant="primary" type="submit" block>
+                    Create Account
+                  </Button>
+                </div>
               </div>
-            
-            </div>
             </span>
           </Form>
         </Col>
+        <div className="redirect" style={{ visibility: success }}>
+          New Account created Successfully!{" "}
+          <Link to="/dashboard">go to dashboard</Link>{" "}
+        </div>
       </Row>
     </Container>
   );
