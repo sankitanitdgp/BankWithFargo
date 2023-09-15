@@ -45,13 +45,17 @@ public class UserService {
     @Transactional
     public User createUser(UserSignupRequestDTO user){
 
-            try{
-                User newUser= new User();
-                BeanUtils.copyProperties(user,newUser);
+        User u= userRepository.findOneByEmail(user.getEmail());
+        System.out.println("********* "+ u +"******************");
+        if(u==null) {
+            try {
+                User newUser = new User();
+                BeanUtils.copyProperties(user, newUser);
                 return userRepository.save(newUser);
-            } catch(Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+        }
         return null;
     }
 

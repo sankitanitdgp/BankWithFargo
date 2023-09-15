@@ -1,0 +1,32 @@
+.dashboard-card{
+    width: 30%;
+    height: 100px;
+    margin: 20px;
+    cursor: pointer;
+    .card {
+    border: none; /* Remove card border if needed */
+    border-radius: 10px; /* Add rounded corners to the card */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+}
+
+/* Style for the card image */
+.card-img-top {
+    max-height: 200px; /* Set a maximum height for the image */
+    object-fit: cover; /* Scale the image to cover the entire card */
+    border-top-left-radius: 10px; /* Match the card's top-left border radius */
+    border-top-right-radius: 10px; /* Match the card's top-right border radius */
+}
+
+/* Add padding to the card body (optional) */
+.card-body {
+    padding: 1rem;
+}
+
+/* Customize card text (optional) */
+.card-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+}

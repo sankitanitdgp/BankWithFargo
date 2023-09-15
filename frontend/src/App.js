@@ -1,14 +1,13 @@
-
-
-import React from 'react';
-import './App.css';
-import SignUp from './components/SignUp';
-import Home from './components/Home';
-import OpenAccount from './components/OpenAccount';
-import "bootstrap/dist/css/bootstrap.min.css"
-import Login from './components/Login';
-import TransactionHistory from './components/TransactionHistory';
+import React from "react";
+import "./App.css";
+import SignUp from "./components/SignUp";
+import Home from "./components/Home";
+import OpenAccount from "./components/OpenAccount";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Login from "./components/Login";
+import TransactionHistory from "./components/TransactionHistory";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
@@ -18,11 +17,12 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="openAccount" element={<OpenAccount />} />
-          <Route path="transactionHistory" element={<TransactionHistory />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="transactions" element={<TransactionHistory />} />
         </Route>
       </Routes>
-      </BrowserRouter>
+    </BrowserRouter>
   );
 }
 
-export default App
+export default App;
