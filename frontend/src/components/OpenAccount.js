@@ -105,8 +105,13 @@ const SignUp = () => {
     } else {
       // Submit your data to the server or perform further actions here
       console.log(formData);
+<<<<<<< HEAD
       OpenAccountService.openAccount(formData).then((res) => console.log(res));
       setSuccess("visible");
+=======
+      OpenAccountService.openAccount
+      (formData).then(res=>console.log(res))
+>>>>>>> 4e06b9ea987ac84e08bd3d078b216c673bc92b32
     }
   };
 

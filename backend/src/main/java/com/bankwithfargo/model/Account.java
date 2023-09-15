@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Account {
     @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountNumber;
 
     @Column(name="title", nullable = false)
