@@ -104,7 +104,8 @@ const SignUp = () => {
     } else {
       // Submit your data to the server or perform further actions here
       console.log(formData);
-      OpenAccountService.openAccount(formData).then(res=>console.log(res))
+      OpenAccountService.openAccount
+      (formData).then(res=>console.log(res))
     }
   };
 
