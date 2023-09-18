@@ -29,7 +29,7 @@ public class AccountService {
     @Autowired
     TransactionRepository transactionRepository;
 
-    public Account openAccount(AccountRequestDTO account) {
+    public Account openAccount(AccountRequestDTO account, User user) {
         try {
             Account newAccount = new Account();
             BeanUtils.copyProperties(account, newAccount);
@@ -37,12 +37,12 @@ public class AccountService {
             newAccount.setDateOfOpening(LocalDate.now());
             newAccount.setIfsc("IFSC0099123");
             newAccount.setBalance(0.0);
+            newAccount.setUser(user);
+            newAccount.setEmail(user.getEmail());
 
             long accountNumber = new Random().nextInt(0, Integer.MAX_VALUE);
             newAccount.setAccountNumber(accountNumber);
 
-            User user = userLoginRepository.findOneByEmail(account.getEmail());
-            newAccount.setUser(user);
             return accountRepository.save(newAccount);
 
         } catch (Exception e) {
@@ -67,9 +67,19 @@ public class AccountService {
        Account userAccount=account.get();
        if(userAccount.getMpin() != checkBalanceDTO.getMpin())
        {
-           return "Enter correct Mpin.";
+           return "Incorrect MPIN";
        }
        return userAccount.getBalance();
 
     }
+    public List<Account> getAllAccounts(User user){
+        try{
+            List<Account> accounts=accountRepository.findAccountNumbersByEmail(user.getEmail());
+            return accounts;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
 }

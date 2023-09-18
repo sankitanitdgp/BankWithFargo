@@ -1,23 +1,19 @@
-// import React, { useState } from 'react';
-// import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-
-// const TransactionHistory = () => {
-//     const [formData, setFormData] = useState({
-
-//     });
-
-// TransactionHistory.js
 import React, { Component, useEffect, useState } from "react";
 import "../styles/TransactionHistory.css";
 import txn from "../utils/txn";
+import Cookies from "universal-cookie";
+import { useNavigate } from "react-router";
 
 function TransactionHistory() {
   const [transactions, setTransactions] = useState(txn);
+  const cookies=new Cookies();
+  const navigate=useNavigate();
 
-  // Fetch transaction data when the component mounts
-  // useEffect(()=>{
-  //   setTransactions()
-  // })
+  useEffect(()=>{
+    if(!cookies.get("token")){
+      navigate("/login")
+    }
+  })
 
   return (
     <div className="table-container">

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../styles/Login.css";
 import { UserLoginService } from "../service/UserService";
-import { Link, redirect } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 const Login = () => {
@@ -16,7 +16,14 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState("");
   const [success, setSuccess] = useState("hidden");
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z]+\.[A-Za-z]{2,}$/i;
-  const cookies = new Cookies();
+  const cookies=new Cookies();
+  const navigate=useNavigate();
+
+  useEffect(()=>{
+    if(cookies.get("token")){
+      navigate("/dashboard")
+    }
+  })
 
   const handleEmailChange = (e) => {
     const { name, value } = e.target;
@@ -49,7 +56,9 @@ const Login = () => {
     console.log(formData);
     UserLoginService.login(formData).then((res) => {
       console.log(res);
-      cookies.set("email", formData.email, { path: "/" });
+      cookies.set("token", res, { path: "/" });
+      navigate("/dashboard");
+      window.location.reload();
     });
     setSuccess("visible");
   };

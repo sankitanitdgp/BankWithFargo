@@ -1,19 +1,54 @@
 import axios from "axios";
+import {useNavigate} from 'react-router-dom';
 
 const BASE_URL = "http://localhost:8080";
 
-const OpenAccountService = {
-    async openAccount(userData){
+
+const AccountService = {
+
+    async openAccount(userData, config){
         try{
-            const response=await axios.post(`${BASE_URL}/openAccount`, userData);
+            const response=await axios.post(`${BASE_URL}/openAccount`, userData, config);
             return response.data;
         } catch(error){
-            throw error;
+            if(error.response && error.response.status===401){
+                console.log("401: Unauthorized access");
+            } else {
+                console.log("An error occured");
+            }
+            return error.response;
+        }
+    },
+
+    async checkBalance(userData, config){
+        try{
+            const response=await axios.post(`${BASE_URL}/checkBalance`, userData, config);
+            return response.data;
+        } catch(error){
+            if(error.response && error.response.status===401){
+                console.log("401: Unauthorized access");
+            } else {
+                console.log("An error occured");
+            }
+            return error.response;
+        }
+    },
+    async getAllAccounts(config){
+        try{
+            const response=await axios.post(`${BASE_URL}/getAccountsByUser`, null,config);
+            return response;
+        } catch(error){
+            if(error.response && error.response.status===401){
+                console.log("401: Unauthorized access");
+            } else {
+                console.log("An error occured");
+            }
+            return error.response;
         }
     }
+
 };
 
 
-
-export {OpenAccountService};
+export {AccountService};
 

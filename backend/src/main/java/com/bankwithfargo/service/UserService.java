@@ -4,6 +4,7 @@ import com.bankwithfargo.dto.UserLoginRequestDTO;
 import com.bankwithfargo.dto.UserSignupRequestDTO;
 import com.bankwithfargo.model.User;
 import com.bankwithfargo.repository.UserLoginRepository;
+import com.bankwithfargo.security.JwtTokenProvider;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,29 +18,15 @@ import java.util.List;
 public class UserService {
     @Autowired
     UserLoginRepository userRepository;
-    public ArrayList<UserLoginRequestDTO> getAllUsers(){
+
+    @Autowired
+    JwtTokenProvider jwtTokenProvider;
+    public List<User> getAllUsers(){
         List<User> users = userRepository.findAll();
-        ArrayList<UserLoginRequestDTO> returnValue = new ArrayList<>();
-        BeanUtils.copyProperties(users, returnValue);
-        return returnValue;
-    }
-
-    public String authorizeUser(UserLoginRequestDTO user){
-        try{
-            User foundUser=userRepository.findOneByEmail(user.getEmail());
-            if(foundUser!=null) {
-                if(foundUser.getPassword().equals(user.getPassword()))
-                    return "User authorized successfully";
-                else
-                    return "Incorrect password";
-            } else {
-                return "User not found";
-            }
-        } catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-        return null;
-
+        return users;
+//        ArrayList<UserLoginRequestDTO> returnValue = new ArrayList<>();
+//        BeanUtils.copyProperties(users, returnValue);
+//        return returnValue;
     }
 
     @Transactional
