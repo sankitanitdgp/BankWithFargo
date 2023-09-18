@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../styles/OpenAccount.css";
-import { OpenAccountService } from "../service/AccountService";
-import { Link, redirect } from "react-router-dom";
+import { AccountService } from "../service/AccountService";
+import { Link, redirect, useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
 
-const SignUp = () => {
+const OpenAccount = (props) => {
   const [formData, setFormData] = useState({
     title: "",
     firstName: "",
@@ -14,12 +15,20 @@ const SignUp = () => {
     phone: "",
     pan: "",
     mpin: "",
-    email: "",
     presentAddress: "",
     permanentAddress: "",
     occupationType: "",
     income: "",
   });
+
+  const cookies=new Cookies();
+  const navigate=useNavigate();
+
+  useEffect(()=>{
+    if(!cookies.get("token")){
+      navigate("/login")
+    }
+  })
 
   const [confirmMpin, setConfirmMpin] = useState("");
   const [errors, setErrors] = useState({});
@@ -69,11 +78,6 @@ const SignUp = () => {
     setConfirmMpin(value);
   };
 
-  const handleEmail = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, email: value });
-  };
-
   const handlePresentAddress = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, presentAddress: value });
@@ -105,7 +109,18 @@ const SignUp = () => {
     } else {
       // Submit your data to the server or perform further actions here
       console.log(formData);
-      OpenAccountService.openAccount(formData).then((res) => console.log(res));
+      const config = {
+        headers: { Authorization: `Bearer ${cookies.get("token")}` }
+      };
+      AccountService.openAccount(formData, config).then((res) => {
+        console.log(res);
+        if(res.status && res.status===401){
+            navigate("/login");
+        } else {
+            console.log("Account opened successfully: ",res);
+            navigate("/dashboard");
+        }
+      });
       setSuccess("visible");
     }
   };
@@ -188,22 +203,6 @@ const SignUp = () => {
                 placeholder="Enter your father's name"
                 value={formData.fatherName}
                 onChange={handleFatherName}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group
-              controlId="email"
-              autocomplete="off"
-              className="Form-grp"
-            >
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="text"
-                name="fatherName"
-                placeholder="Enter your email id"
-                value={formData.email}
-                onChange={handleEmail}
                 required
               />
             </Form.Group>
@@ -352,4 +351,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default OpenAccount;

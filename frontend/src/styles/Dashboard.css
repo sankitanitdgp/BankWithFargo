@@ -1,35 +1,37 @@
 .dashboard-card{
-    /* width: 60%;
-    height: 60%; */
-    height: 75%;
-    width:24%;
+    width: 100%;
+    height: 100px;
     margin: 20px;
+    color: white;
+    background-color: #367ce6;
+    font-weight: 500;
     cursor: pointer;
+    .card {
+    border: none; /* Remove card border if needed */
     border-radius: 10px; /* Add rounded corners to the card */
-    box-shadow: 0 4px 6px rgba(141, 129, 212, 0.897); /* Add a subtle box shadow */
-    padding-top: 8%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+    }
+
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .card-title {
+        font-weight: bold;
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
 }
 
-/* Style for the card image */
-.card-img-top {
-    max-height: 200px; /* Set a maximum height for the image */
-    object-fit: cover; /* Scale the image to cover the entire card */
-    border-top-left-radius: 10px; /* Match the card's top-left border radius */
-    border-top-right-radius: 10px; /* Match the card's top-right border radius */
+.dashboard-card:hover{
+    background-color: #5290ec;
 }
 
-/* Add padding to the card body (optional) */
-.cards-body {
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: center;
-   gap: 16px;
-   align-items: center;
-}
-
-/* Customize card text (optional) */
-.card-title {
-    font-weight: bold;
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
+.card-link{
+    display: inline-block;
+    width: 25%;
+    margin: 25px;
+    text-decoration: none;
 }

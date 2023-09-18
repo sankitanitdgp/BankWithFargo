@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { UserRegisterService } from "../service/UserService";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +17,7 @@ const SignUp = () => {
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z]+\.[A-Za-z]{2,}$/i;
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState("hidden");
+  const navigate=useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -75,6 +76,7 @@ const SignUp = () => {
       }).then((res) => {
         console.log(res);
         setSuccess("visible");
+        navigate("/login");
       });
     }
   };
