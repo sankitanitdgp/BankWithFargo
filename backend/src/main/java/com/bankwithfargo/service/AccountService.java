@@ -3,6 +3,7 @@ package com.bankwithfargo.service;
 import com.bankwithfargo.dto.AccountRequestDTO;
 import com.bankwithfargo.dto.CheckBalanceDTO;
 import com.bankwithfargo.dto.DepositMoneyDTO;
+import com.bankwithfargo.dto.TransferMoneyDTO;
 import com.bankwithfargo.model.Account;
 import com.bankwithfargo.model.Transaction;
 import com.bankwithfargo.model.User;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -113,6 +115,41 @@ public class AccountService {
                 return "Money withdrawn successfully";
             }
         }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return "An error occurred";
+    }
+
+    public String transferMoney(TransferMoneyDTO transferMoneyDTO){
+        try{
+            Account senderAccount=accountRepository.findByAccountNumber(transferMoneyDTO.getSenderAccNumber());
+            Account receiverAccount=accountRepository.findByAccountNumber(transferMoneyDTO.getReceiverAccNumber());
+            if(transferMoneyDTO.getMpin() != senderAccount.getMpin()){
+                return "Incorrect MPIN";
+            } else if(transferMoneyDTO.getAmount()<0){
+                return "amount cannot be negative";
+            }else if(transferMoneyDTO.getAmount()>senderAccount.getBalance()) {
+                return "Insufficient balance";
+            } else {
+                Transaction transaction = new Transaction();
+                transaction.setSenderAccNo(transferMoneyDTO.getSenderAccNumber());
+                transaction.setReceiverAccNo(transferMoneyDTO.getReceiverAccNumber());
+                transaction.setTimeStamp(LocalDateTime.now());
+                transaction.setAmount(transferMoneyDTO.getAmount());
+
+//                long transactionId = new Random().nextInt(0, Integer.MAX_VALUE);
+//                transaction.setTransactionId(transactionId);
+
+                transactionRepository.save(transaction);
+                senderAccount.setBalance(senderAccount.getBalance() - transferMoneyDTO.getAmount());
+                accountRepository.save(senderAccount);
+                receiverAccount.setBalance(receiverAccount.getBalance() + transferMoneyDTO.getAmount());
+                accountRepository.save(receiverAccount);
+
+                return "Transfer Successful";
+            }
+
+        } catch(Exception e){
             System.out.println(e.getMessage());
         }
         return "An error occurred";
