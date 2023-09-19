@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/Home.css";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import Nav from "./Nav";
+import Cookies from "universal-cookie";
 
 const Home = () => {
+  const cookies=new Cookies();
+  const navigate=useNavigate();
+  useEffect(()=>{
+    if(cookies.get("token")){
+      navigate("/dashboard");
+    }
+  })
   return (
     <>
       <Nav />
