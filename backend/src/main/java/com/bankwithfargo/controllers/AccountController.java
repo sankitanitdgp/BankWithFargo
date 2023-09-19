@@ -3,6 +3,7 @@ package com.bankwithfargo.controllers;
 import com.bankwithfargo.dto.AccountRequestDTO;
 import com.bankwithfargo.dto.CheckBalanceDTO;
 import com.bankwithfargo.dto.DepositMoneyDTO;
+import com.bankwithfargo.dto.TransferMoneyDTO;
 import com.bankwithfargo.model.User;
 import com.bankwithfargo.service.AccountService;
 import jakarta.validation.Valid;
@@ -27,8 +28,8 @@ public class AccountController {
         return new ResponseEntity<Object>(accountService.openAccount(accountRequestDTO, user), HttpStatus.CREATED);
     }
 
-    @GetMapping("/getTransactions/{accNo}")
-    public ResponseEntity<Object> getTransactions(@PathVariable Long accNo){
+    @GetMapping("/getTransactions")
+    public ResponseEntity<Object> getTransactions(@RequestBody Long accNo){
         return new ResponseEntity<Object>(accountService.getTransactions(accNo),HttpStatus.OK);
     }
 
@@ -53,6 +54,12 @@ public class AccountController {
     @ResponseBody
     public ResponseEntity<Object> withdrawMoney(@RequestBody DepositMoneyDTO depositMoneyDTO){
         return new ResponseEntity<Object>(accountService.withdrawMoney(depositMoneyDTO),HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/transferMoney", method=POST, produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<Object> transferMoney(@RequestBody TransferMoneyDTO transferMoneyDTO){
+        return new ResponseEntity<Object>(accountService.transferMoney(transferMoneyDTO),HttpStatus.OK);
     }
 
 }
