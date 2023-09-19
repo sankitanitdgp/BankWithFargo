@@ -3,61 +3,61 @@ import "../styles/TransactionHistory.css";
 import txn from "../utils/txn";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router";
-import {Dropdown, Button, DropdownButton, Form} from 'react-bootstrap';
+import { Dropdown, Button, DropdownButton, Form } from "react-bootstrap";
 import { AccountService } from "../service/AccountService";
 import { TransactionHistoryService } from "../service/TransactionHistoryService";
 
-
-
 function TransactionHistory() {
   const [transactions, setTransactions] = useState([]);
-  const [accounts, setAccounts]=useState([1,2,3]);
-  const [selectedAcc, setSelectedAcc]=useState("");
-  const [mpin, setMpin]=useState("");
-  const [error, setError]=useState("");
-  
-  const cookies=new Cookies();
-  const navigate=useNavigate();
+  const [accounts, setAccounts] = useState([1, 2, 3]);
+  const [selectedAcc, setSelectedAcc] = useState("");
+  const [mpin, setMpin] = useState("");
+  const [error, setError] = useState("");
 
-  useEffect(()=>{
-    if(!cookies.get("token")){
-      navigate("/login")
+  const cookies = new Cookies();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!cookies.get("token")) {
+      navigate("/login");
     }
-  })
+  });
 
-  useEffect(()=>{
+  useEffect(() => {
     const config = {
       headers: { Authorization: `Bearer ${cookies.get("token")}` },
       // "Content-Type": "application/json"
     };
     AccountService.getAllAccounts(config).then((res) => {
-      if(res.status && res.status===401){
-          navigate("/login");
+      if (res.status && res.status === 401) {
+        navigate("/login");
       } else {
-          setAccounts(res.data)
+        setAccounts(res.data);
       }
     });
-  },[])
+  }, []);
 
-  const handleSubmitAccount=()=>{
+  const handleSubmitAccount = () => {
     const config = {
-      headers: { Authorization: `Bearer ${cookies.get("token")}` }
+      headers: { Authorization: `Bearer ${cookies.get("token")}` },
     };
-    TransactionHistoryService.getTransactions(selectedAcc, config).then((res) => {
-      console.log("transaction",res);
-      if(res.status && res.status===401){
+    TransactionHistoryService.getTransactions(selectedAcc, config).then(
+      (res) => {
+        console.log("transaction", res);
+        if (res.status && res.status === 401) {
           navigate("/login");
-      } else if(res==="Incorrect MPIN") {
+        } else if (res === "Incorrect MPIN") {
           setError(res);
-      } else {
-        setError("");
-        setTransactions(res);
-        // setShowBalance(true);
-        console.log("hello");
-        //console.log(typeof(transactions));
+        } else {
+          setError("");
+          setTransactions(res);
+          // setShowBalance(true);
+          console.log("hello");
+          //console.log(typeof(transactions));
+        }
       }
-    });
-  }
+    );
+  };
 
   return (
     <div className="table-container">
@@ -66,40 +66,54 @@ function TransactionHistory() {
       </h2>
       <Form>
         <Form.Group
-              controlId="mpin"
-              autocomplete="off"
-              className="Form-grp modal-form-grp"
-            >
-        <Form.Label>Select Account</Form.Label>
-        <DropdownButton
-        title={selectedAcc}
-        onSelect={(e)=>{setSelectedAcc(e)}}
+          controlId="mpin"
+          autocomplete="off"
+          className="Form-grp modal-form-grp"
+        >
+          <Form.Label>Select Account</Form.Label>
+          <DropdownButton
+            title={selectedAcc}
+            onSelect={(e) => {
+              setSelectedAcc(e);
+            }}
+          >
+            <Dropdown.Menu>
+              {accounts.map((acc) => (
+                <Dropdown.Item eventKey={acc.accountNumber}>
+                  {acc.accountNumber}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </DropdownButton>
+        </Form.Group>
+
+        <Form.Group
+          controlId="mpin"
+          autocomplete="off"
+          className="Form-grp modal-form-grp"
+        >
+          <Form.Label>MPIN</Form.Label>
+          <Form.Control
+            type="text"
+            name="mpin"
+            placeholder="Enter MPIN"
+            value={mpin}
+            onChange={(e) => {
+              setMpin(e.target.value);
+            }}
+            required
+          />
+        </Form.Group>
+      </Form>
+      <div>{error}</div>
+      <Button
+        className="check-balance-btn"
+        variant="primary"
+        type="submit"
+        onClick={handleSubmitAccount}
       >
-
-        <Dropdown.Menu >
-          {accounts.map((acc)=><Dropdown.Item eventKey={acc.accountNumber} >{acc.accountNumber}</Dropdown.Item>)}
-        </Dropdown.Menu>
-      </DropdownButton>
-      </Form.Group>
-
-      <Form.Group
-              controlId="mpin"
-              autocomplete="off"
-              className="Form-grp modal-form-grp"
-            >
-              <Form.Label>MPIN</Form.Label>
-              <Form.Control
-                type="text"
-                name="mpin"
-                placeholder="Enter MPIN"
-                value={mpin}
-                onChange={(e)=>{setMpin(e.target.value)}}
-                required
-              />
-            </Form.Group>
-            </Form>
-            <div>{error}</div>
-      <Button className="check-balance-btn" variant="primary" type="submit" onClick={handleSubmitAccount} >Submit</Button>
+        Submit
+      </Button>
       <br></br>
       <table className="table table-bordered table-hover">
         <thead>
