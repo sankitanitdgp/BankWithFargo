@@ -2,6 +2,7 @@ package com.bankwithfargo.controllers;
 
 import com.bankwithfargo.dto.AccountRequestDTO;
 import com.bankwithfargo.dto.CheckBalanceDTO;
+import com.bankwithfargo.dto.DepositMoneyDTO;
 import com.bankwithfargo.model.User;
 import com.bankwithfargo.service.AccountService;
 import jakarta.validation.Valid;
@@ -41,4 +42,17 @@ public class AccountController {
     public ResponseEntity<Object> getAccountsByUser(@AuthenticationPrincipal User user) {
         return new ResponseEntity<>(accountService.getAllAccounts(user), HttpStatus.OK);
     }
+
+    @RequestMapping(value="/depositMoney", method=POST, produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<Object> depositMoney(@RequestBody DepositMoneyDTO depositMoneyDTO){
+        return new ResponseEntity<Object>(accountService.depositMoney(depositMoneyDTO),HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/withdrawMoney", method=POST, produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<Object> withdrawMoney(@RequestBody DepositMoneyDTO depositMoneyDTO){
+        return new ResponseEntity<Object>(accountService.withdrawMoney(depositMoneyDTO),HttpStatus.OK);
+    }
+
 }

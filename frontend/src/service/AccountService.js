@@ -45,7 +45,35 @@ const AccountService = {
             }
             return error.response;
         }
-    }
+    },
+    async depositMoney(userData, config){
+        try{
+            const response=await axios.post(`${BASE_URL}/depositMoney`, userData, config);
+            console.log("in service - ",response);
+            return response.data;
+        } catch(error){
+            if(error.response && error.response.status===401){
+                console.log("401: Unauthorized access");
+            } else {
+                console.log("An error occured");
+            }
+            return error.response;
+        }
+    },
+    async withdrawMoney(userData, config){
+        try{
+            const response=await axios.post(`${BASE_URL}/withdrawMoney`, userData, config);
+            console.log("in service - ",response);
+            return response.data;
+        } catch(error){
+            if(error.response && error.response.status===401){
+                console.log("401: Unauthorized access");
+            } else {
+                console.log("An error occured");
+            }
+            return error.response;
+        }
+    },
 
 };
 

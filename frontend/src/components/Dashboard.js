@@ -4,17 +4,29 @@ import "../styles/Dashboard.css";
 import { Link, useNavigate } from "react-router-dom";
 import ViewBalanceModal from "./ViewBalanceModal";
 import Cookies from "universal-cookie";
+import DepositMoneyModal from "./DepositMoneyModal";
+import WithdrawMoneyModal from "./WithdrawMoneyModal";
 
 function Dashboard() {
-  const [show, setShow] = useState(false);
+  const [showViewBalance, setShowViewBalance] = useState(false);
+  const [showDepositMoney, setShowDepositMoney]=useState(false);
+  const [showWithdrawMoney, setShowWithdrawMoney]=useState(false);
   const cookies=new Cookies();
   const navigate=useNavigate();
-  const handleOnClickTransactions = () => {};
 
   const handleOnClickBalance = () => {
     console.log("here");
-    setShow(true);
+    setShowViewBalance(true);
   };
+
+  const handleOnClickDeposit = () => {
+    console.log("here");
+    setShowDepositMoney(true);
+  };
+
+  const handleOnClickWithdraw=()=>{
+setShowWithdrawMoney(true);
+  }
 
   useEffect(()=>{
     if(!cookies.get("token")){
@@ -28,7 +40,6 @@ function Dashboard() {
         <Link className="card-link" to="/openAccount">
           <Card
             className="dashboard-card card-img-"
-            onClick={handleOnClickTransactions}
           >
             <Card.Body>Open new account</Card.Body>
           </Card>
@@ -43,12 +54,31 @@ function Dashboard() {
         <Link className="card-link" to="/transactions">
         <Card
             className="dashboard-card card-img-"
-            onClick={handleOnClickTransactions}
           >
             <Card.Body>View Transactions</Card.Body>
           </Card>
         </Link>
-        {show && <ViewBalanceModal show={show} setShow={setShow} />}
+
+        <Link className="card-link">
+        <Card
+            className="dashboard-card card-img-"
+            onClick={handleOnClickDeposit}
+          >
+            <Card.Body>Deposit Money</Card.Body>
+          </Card>
+        </Link>
+
+        <Link className="card-link" >
+        <Card
+            className="dashboard-card card-img-"
+            onClick={handleOnClickWithdraw}
+          >
+            <Card.Body>Withdraw Money</Card.Body>
+          </Card>
+        </Link>
+        {showViewBalance && <ViewBalanceModal show={showViewBalance} setShow={setShowViewBalance} />}
+        {showDepositMoney && <DepositMoneyModal show={showDepositMoney} setShow={setShowDepositMoney} />}
+        {showWithdrawMoney && <WithdrawMoneyModal show={showWithdrawMoney} setShow={setShowWithdrawMoney} />}
       </div>
     </>
   );
