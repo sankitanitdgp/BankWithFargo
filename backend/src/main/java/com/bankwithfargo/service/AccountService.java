@@ -2,6 +2,7 @@ package com.bankwithfargo.service;
 
 import com.bankwithfargo.dto.AccountRequestDTO;
 import com.bankwithfargo.dto.CheckBalanceDTO;
+import com.bankwithfargo.dto.DepositMoneyDTO;
 import com.bankwithfargo.model.Account;
 import com.bankwithfargo.model.Transaction;
 import com.bankwithfargo.model.User;
@@ -59,17 +60,17 @@ public class AccountService {
     }
 
     public Object checkBalance(CheckBalanceDTO checkBalanceDTO){
-       Optional<Account> account=accountRepository.findByAccountNumber(checkBalanceDTO.getAccNo());
-       if(account.isEmpty())
+       Account account=accountRepository.findByAccountNumber(checkBalanceDTO.getAccNo());
+       if(account==null)
        {
            return "Account does not exist.";
        }
-       Account userAccount=account.get();
-       if(userAccount.getMpin() != checkBalanceDTO.getMpin())
+
+       if(account.getMpin() != checkBalanceDTO.getMpin())
        {
            return "Incorrect MPIN";
        }
-       return userAccount.getBalance();
+       return account.getBalance();
 
     }
     public List<Account> getAllAccounts(User user){
@@ -80,6 +81,41 @@ public class AccountService {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public String depositMoney(DepositMoneyDTO depositMoneyDTO){
+        try{
+            Account account=accountRepository.findByAccountNumber(depositMoneyDTO.getAccNo());
+            if(depositMoneyDTO.getMpin() != account.getMpin()){
+                return "Incorrect MPIN";
+            }
+            account.setBalance(account.getBalance() + depositMoneyDTO.getAmount());
+            accountRepository.save(account);
+            return "Deposit successful";
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return "An error occurred";
+    }
+
+    public String withdrawMoney(DepositMoneyDTO depositMoneyDTO){
+        try{
+            Account account=accountRepository.findByAccountNumber(depositMoneyDTO.getAccNo());
+            if(depositMoneyDTO.getMpin() != account.getMpin()){
+                return "Incorrect MPIN";
+            } else if(depositMoneyDTO.getAmount()<0){
+                return "amount cannot be negative";
+            }else if(depositMoneyDTO.getAmount()>account.getBalance()){
+                return "Insufficient balance";
+            } else {
+                account.setBalance(account.getBalance() - depositMoneyDTO.getAmount());
+                accountRepository.save(account);
+                return "Money withdrawn successfully";
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return "An error occurred";
     }
 
 }
