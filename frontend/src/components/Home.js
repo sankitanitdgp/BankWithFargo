@@ -7,11 +7,7 @@ import Cookies from "universal-cookie";
 const Home = () => {
   const cookies=new Cookies();
   const navigate=useNavigate();
-  useEffect(()=>{
-    if(cookies.get("token")){
-      navigate("/dashboard");
-    }
-  })
+  
   return (
     <>
       <Nav />

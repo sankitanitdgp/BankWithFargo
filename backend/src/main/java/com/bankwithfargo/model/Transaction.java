@@ -11,6 +11,7 @@ import org.springframework.cglib.core.Local;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "transactions")
@@ -35,7 +36,7 @@ public class Transaction {
 
     @Column(name = "timestamp", nullable = false)
     @NotNull
-    private LocalDateTime timeStamp;
+    private Date timeStamp;
 
 
 }

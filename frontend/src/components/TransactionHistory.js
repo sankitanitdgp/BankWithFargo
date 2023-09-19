@@ -21,7 +21,7 @@ function TransactionHistory() {
     if (!cookies.get("token")) {
       navigate("/login");
     }
-  });
+  },[]);
 
   useEffect(() => {
     const config = {
@@ -41,7 +41,9 @@ function TransactionHistory() {
     const config = {
       headers: { Authorization: `Bearer ${cookies.get("token")}` },
     };
-    TransactionHistoryService.getTransactions(selectedAcc, config).then(
+    TransactionHistoryService.getTransactions({
+      accNo: selectedAcc
+    }, config).then(
       (res) => {
         console.log("transaction", res);
         if (res.status && res.status === 401) {
@@ -106,14 +108,15 @@ function TransactionHistory() {
         </Form.Group>
       </Form>
       <div>{error}</div>
+      <div className="submit-transactions-btn">
       <Button
-        className="check-balance-btn"
         variant="primary"
         type="submit"
         onClick={handleSubmitAccount}
       >
         Submit
       </Button>
+      </div>
       <br></br>
       <table className="table table-bordered table-hover">
         <thead>

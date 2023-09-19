@@ -1,9 +1,6 @@
 package com.bankwithfargo.service;
 
-import com.bankwithfargo.dto.AccountRequestDTO;
-import com.bankwithfargo.dto.CheckBalanceDTO;
-import com.bankwithfargo.dto.DepositMoneyDTO;
-import com.bankwithfargo.dto.TransferMoneyDTO;
+import com.bankwithfargo.dto.*;
 import com.bankwithfargo.model.Account;
 import com.bankwithfargo.model.Transaction;
 import com.bankwithfargo.model.User;
@@ -15,8 +12,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -54,7 +53,12 @@ public class AccountService {
         return null;
     }
 
-    public List<Transaction> getTransactions(Long accNo) {
+    public List<Transaction> getTransactions(TransactionRequestDTO transactionRequestDTO) {
+        Long accNo=transactionRequestDTO.getAccNo();
+        Account account=accountRepository.findByAccountNumber(accNo);
+        if(transactionRequestDTO.getMpin() != account.getMpin()){
+            //TODO: handle error
+        }
         List<Transaction> transactions=transactionRepository
                 .findAllBySenderAccNoOrReceiverAccNo(accNo,accNo);
 
@@ -134,7 +138,7 @@ public class AccountService {
                 Transaction transaction = new Transaction();
                 transaction.setSenderAccNo(transferMoneyDTO.getSenderAccNumber());
                 transaction.setReceiverAccNo(transferMoneyDTO.getReceiverAccNumber());
-                transaction.setTimeStamp(LocalDateTime.now());
+                transaction.setTimeStamp(new Date());
                 transaction.setAmount(transferMoneyDTO.getAmount());
 
 //                long transactionId = new Random().nextInt(0, Integer.MAX_VALUE);

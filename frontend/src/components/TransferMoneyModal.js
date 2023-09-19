@@ -9,7 +9,7 @@ import "../styles/DepositMoneyModal.css";
 function WithdrawMoneyModal(props) {
   const [show, setShow] = useState(props.show);
   const [balance, setBalance] = useState("");
-  const [accounts, setAccounts] = useState([1, 2, 3]);
+  const [accounts, setAccounts] = useState([]);
   const [selectedAcc, setSelectedAcc] = useState("");
   const [mpin, setMpin] = useState("");
   const [amount, setAmount] = useState("");
@@ -41,10 +41,10 @@ function WithdrawMoneyModal(props) {
     };
     AccountService.transferMoney(
       {
-        accNo: selectedAcc,
+        senderAccNumber: selectedAcc,
         mpin: mpin,
         amount: amount,
-        receiverAccNo: receiverAccountNumber,
+        receiverAccNumber: receiverAccountNumber,
       },
       config
     ).then((res) => {

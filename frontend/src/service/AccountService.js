@@ -74,7 +74,19 @@ const AccountService = {
             return error.response;
         }
     },
-
+    async transferMoney(userData, config){
+        try{
+            const response=await axios.post(`${BASE_URL}/transferMoney`, userData, config);
+            return response.data;
+        } catch(error){
+            if(error.response && error.response.status===401){
+                console.log("401: Unauthorized access");
+            } else {
+                console.log("An error occured");
+            }
+            return error.response;
+        }
+    },
 };
 
 

@@ -49,11 +49,11 @@ function Dashboard() {
           </Card>
         </Link>
 
-        <div className="card-link">
+        <Link className="card-link">
           <Card className="dashboard-card" onClick={handleOnClickBalance}>
             <Card.Body>Check Balance</Card.Body>
           </Card>
-        </div>
+        </Link>
 
         <Link className="card-link" to="/transactions">
           <Card className="dashboard-card card-img-">
@@ -61,7 +61,7 @@ function Dashboard() {
           </Card>
         </Link>
 
-        <Link className="card-link">
+        <Link className="deposit-money-card card-link">
           <Card
             className="dashboard-card card-img-"
             onClick={handleOnClickDeposit}
