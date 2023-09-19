@@ -35,3 +35,7 @@
     padding: 12px;
   }
   
+  .submit-transactions-btn{
+    margin: 20px auto 10px;
+    width: fit-content;
+  }

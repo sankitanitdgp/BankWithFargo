@@ -6,9 +6,10 @@ const BASE_URL = "http://localhost:8080";
 
 const TransactionHistoryService = {
 
-    async getTransactions(accNo, config){
+    async getTransactions(userData, config){
+        console.log(config);
         try{
-            const response=await axios.get(`${BASE_URL}/getTransactions/`+accNo,config);
+            const response=await axios.post(`${BASE_URL}/getTransactions`,userData,config);
             return response.data;
         } catch(error){
             if(error.response && error.response.status===401){
