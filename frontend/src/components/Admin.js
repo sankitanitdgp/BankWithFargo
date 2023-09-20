@@ -5,9 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import ViewBalanceModal from "./ViewBalanceModal";
 import Cookies from "universal-cookie";
 import DepositMoneyModal from "./DepositMoneyModal";
+import SearchUser from "./SearchUser";
 
 function AdminDashboard() {
-
+  const [showSearchUser, setShowSearchUser] = useState(false);
   const cookies = new Cookies();
   const navigate = useNavigate();
 
@@ -26,20 +27,20 @@ function AdminDashboard() {
           </Card>
         </Link>
 
-        <Link className="card-link">
-          <Card className="dashboard-card" >
+        <Link className="card-link" to="/searchUser">
+          <Card className="dashboard-card">
             <Card.Body>Search User</Card.Body>
           </Card>
         </Link>
 
         <Link className="card-link" to="/transactions">
-          <Card className="dashboard-card card-img-">
+          <Card className="dashboard-card">
             <Card.Body>View User Transactions</Card.Body>
           </Card>
         </Link>
-
-
-        
+        {/* {showSearchUser && (
+          <SearchUser show={showSearchUser} setShow={setShowSearchUser} />
+        )} */}
       </div>
     </>
   );
