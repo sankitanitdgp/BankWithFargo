@@ -26,7 +26,7 @@ public class UserController {
     @Autowired
     AuthService authService;
   
-    @RequestMapping(value="/getAllUsers", method=GET, produces = "application/json")
+    @RequestMapping(value="/getAllUsers", method=POST, produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> getAllUsers(@AuthenticationPrincipal User user) {
         return new ResponseEntity<Object>(userService.getAllUsers(user), HttpStatus.OK);

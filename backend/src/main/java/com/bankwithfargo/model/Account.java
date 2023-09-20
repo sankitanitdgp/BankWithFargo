@@ -75,8 +75,8 @@ public class Account {
     @Column(name="dob", nullable = false)
     private Date dob;
 
-    @Column(name="is_active", nullable = false)
-    private Boolean isActive;
+    @Column(name="is_active", nullable = false, columnDefinition = "boolean default true")
+    private Boolean isActive=true;
 
     @NotNull
     @ManyToOne
