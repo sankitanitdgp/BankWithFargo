@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import { UserRegisterService } from "../service/UserService";
+import { UserService } from "../service/UserService";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
@@ -71,7 +71,7 @@ const SignUp = () => {
       // Submit your data to the server or perform further actions here
       setErrors("");
       console.log(formData);
-      UserRegisterService.register({
+      UserService.register({
         email: formData.email,
         password: formData.password,
       }).then((res) => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../styles/Login.css";
-import { UserLoginService } from "../service/UserService";
+import { UserService } from "../service/UserService";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 
@@ -54,7 +54,7 @@ const Login = () => {
 
     // Submit your data to the server or perform further actions here
     console.log(formData);
-    UserLoginService.login(formData).then((res) => {
+    UserService.login(formData).then((res) => {
       console.log(res);
       cookies.set("token", res, { path: "/" });
       if (formData.email=="admin6@gmail.com"){
