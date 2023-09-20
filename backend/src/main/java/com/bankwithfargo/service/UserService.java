@@ -1,8 +1,11 @@
 package com.bankwithfargo.service;
 
+import com.bankwithfargo.dto.AccountNoDTO;
 import com.bankwithfargo.dto.UserLoginRequestDTO;
 import com.bankwithfargo.dto.UserSignupRequestDTO;
+import com.bankwithfargo.model.Account;
 import com.bankwithfargo.model.User;
+import com.bankwithfargo.repository.AccountRepository;
 import com.bankwithfargo.repository.UserLoginRepository;
 import com.bankwithfargo.security.JwtTokenProvider;
 import jakarta.transaction.Transactional;
@@ -20,10 +23,14 @@ public class UserService {
     UserLoginRepository userRepository;
 
     @Autowired
+    AccountRepository accountRepository;
+
+    @Autowired
     JwtTokenProvider jwtTokenProvider;
-    public List<User> getAllUsers(){
-        List<User> users = userRepository.findAll();
-        return users;
+    public List<Account> getAllUsers(User user){
+        if(user.getEmail().equals("admin6@gmail.com"))
+            return accountRepository.findAll();
+        else return null;
 //        ArrayList<UserLoginRequestDTO> returnValue = new ArrayList<>();
 //        BeanUtils.copyProperties(users, returnValue);
 //        return returnValue;
@@ -45,6 +52,18 @@ public class UserService {
         } else {
             return "User already exists";
         }
+    }
+
+    public Account getUserByAccountNo(AccountNoDTO accountNoDTO, User user) {
+        System.out.println("account no - " + accountNoDTO.getAccNo());
+        if (user.getEmail().equals("admin6@gmail.com")){
+            System.out.println("in admin");
+        return accountRepository.findByAccountNumber(accountNoDTO.getAccNo());
+        } else{
+            System.out.println("in user");
+            return null;
+        }
+
     }
 
 }
