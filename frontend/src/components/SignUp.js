@@ -16,7 +16,8 @@ const SignUp = () => {
   const [passwordError, setPasswordError] = useState("");
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z]+\.[A-Za-z]{2,}$/i;
   const [errors, setErrors] = useState({});
-  const [success, setSuccess] = useState("hidden");
+  const [showMessage, setShowMessage] = useState("hidden");
+  const [message, setMessage]=useState("");
   const navigate=useNavigate();
 
   const handleChange = (e) => {
@@ -74,9 +75,13 @@ const SignUp = () => {
         email: formData.email,
         password: formData.password,
       }).then((res) => {
-        console.log(res);
-        setSuccess("visible");
-        navigate("/login");
+        if(res=="User already exists"){
+            setMessage(res);
+        } else {
+          setMessage(res);
+          navigate("/login");
+        }
+        setShowMessage(true);
       });
     }
   };
@@ -151,8 +156,8 @@ const SignUp = () => {
           </Form>
         </Col>
       </Row>
-      <div style={{ visibility: success }}>
-        Sign up successful <Link to="/dashboard">go to dashboard</Link>{" "}
+      <div style={{ visibility: showMessage }}>
+        {message}
       </div>
     </Container>
   );

@@ -30,20 +30,21 @@ public class UserService {
     }
 
     @Transactional
-    public User createUser(UserSignupRequestDTO user){
+    public String createUser(UserSignupRequestDTO user){
 
         User u= userRepository.findOneByEmail(user.getEmail());
-        System.out.println("********* "+ u +"******************");
         if(u==null) {
             try {
                 User newUser = new User();
                 BeanUtils.copyProperties(user, newUser);
-                return userRepository.save(newUser);
+                userRepository.save(newUser);
+                return "User Registered Successfully";
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                return e.getMessage();
             }
+        } else {
+            return "User already exists";
         }
-        return null;
     }
 
 }
