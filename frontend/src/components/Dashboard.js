@@ -37,6 +37,8 @@ function Dashboard() {
   useEffect(() => {
     if (!cookies.get("token")) {
       navigate("/login");
+    }else if(cookies.get("role")=="admin"){
+      navigate("/adminDashboard")
     }
   });
 

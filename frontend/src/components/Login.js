@@ -57,11 +57,11 @@ const Login = () => {
     UserLoginService.login(formData).then((res) => {
       console.log(res);
       cookies.set("token", res, { path: "/" });
-      if (formData.email=="admin6@gmail.com")
-      {
+      if (formData.email=="admin6@gmail.com"){
+        cookies.set("role","admin");
         navigate("/adminDashboard");
-      }
-      else{
+      } else{
+        cookies.set("role","user");
         navigate("/dashboard");
       }
       

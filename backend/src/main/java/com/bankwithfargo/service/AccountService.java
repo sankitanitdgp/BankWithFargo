@@ -94,10 +94,13 @@ public class AccountService {
             Account account=accountRepository.findByAccountNumber(depositMoneyDTO.getAccNo());
             if(depositMoneyDTO.getMpin() != account.getMpin()){
                 return "Incorrect MPIN";
+            } else if(depositMoneyDTO.getAmount()<0) {
+                return "amount cannot be negative";
+            } else {
+                account.setBalance(account.getBalance() + depositMoneyDTO.getAmount());
+                accountRepository.save(account);
+                return "Deposit successful";
             }
-            account.setBalance(account.getBalance() + depositMoneyDTO.getAmount());
-            accountRepository.save(account);
-            return "Deposit successful";
         }catch(Exception e){
             System.out.println(e.getMessage());
         }

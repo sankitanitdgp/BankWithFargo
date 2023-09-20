@@ -7,6 +7,7 @@ function Logout() {
     const navigate=useNavigate();
     useEffect(()=>{
         cookies.remove("token");
+        cookies.remove("role");
         navigate("/");
     })
   return (
