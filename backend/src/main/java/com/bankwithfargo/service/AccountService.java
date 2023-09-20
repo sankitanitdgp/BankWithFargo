@@ -79,10 +79,9 @@ public class AccountService {
        return account.getBalance();
 
     }
-    public List<Account> getAllAccounts(User user){
+    public List<Account> getAllAccountsByUser(User user){
         try{
-            List<Account> accounts=accountRepository.findAccountNumbersByEmail(user.getEmail());
-            return accounts;
+            return accountRepository.findAccountNumbersByEmail(user.getEmail());
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
@@ -160,6 +159,16 @@ public class AccountService {
             System.out.println(e.getMessage());
         }
         return "An error occurred";
+    }
+
+    public String changeAccountStatus(AccountNoDTO accountNoDTO,User user){
+        if(user.getEmail().equals("admin6@gmail.com")){
+            Account account=accountRepository.findByAccountNumber(accountNoDTO.getAccNo());
+            account.setIsActive(!account.getIsActive());
+            return "Status updated";
+        } else {
+            return "Admin access required";
+        }
     }
 
 }

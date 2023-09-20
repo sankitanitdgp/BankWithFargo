@@ -39,7 +39,7 @@ public class AccountController {
     @RequestMapping(value="/getAccountsByUser", method=POST, produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> getAccountsByUser(@AuthenticationPrincipal User user) {
-        return new ResponseEntity<>(accountService.getAllAccounts(user), HttpStatus.OK);
+        return new ResponseEntity<>(accountService.getAllAccountsByUser(user), HttpStatus.OK);
     }
 
     @RequestMapping(value="/depositMoney", method=POST, produces = "application/json")
@@ -58,6 +58,13 @@ public class AccountController {
     @ResponseBody
     public ResponseEntity<Object> transferMoney(@RequestBody TransferMoneyDTO transferMoneyDTO){
         return new ResponseEntity<Object>(accountService.transferMoney(transferMoneyDTO),HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/changeAccountStatus", method=POST, produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<Object> changeAccountStatus(@RequestBody AccountNoDTO accountNoDTO,
+                                                      @AuthenticationPrincipal User user){
+        return new ResponseEntity<Object>(accountService.changeAccountStatus(accountNoDTO,user),HttpStatus.OK);
     }
 
 }

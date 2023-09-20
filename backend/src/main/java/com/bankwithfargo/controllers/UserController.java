@@ -1,5 +1,6 @@
 package com.bankwithfargo.controllers;
 
+import com.bankwithfargo.dto.AccountNoDTO;
 import com.bankwithfargo.dto.UserLoginRequestDTO;
 import com.bankwithfargo.dto.UserSignupRequestDTO;
 import com.bankwithfargo.model.User;
@@ -27,8 +28,8 @@ public class UserController {
   
     @RequestMapping(value="/getAllUsers", method=GET, produces = "application/json")
     @ResponseBody
-    public ResponseEntity<Object> getAllUsers() {
-        return new ResponseEntity<Object>(userService.getAllUsers(), HttpStatus.OK);
+    public ResponseEntity<Object> getAllUsers(@AuthenticationPrincipal User user) {
+        return new ResponseEntity<Object>(userService.getAllUsers(user), HttpStatus.OK);
     }
 
     @RequestMapping(value="/loginUser", method=POST, produces = "application/json")
@@ -43,4 +44,10 @@ public class UserController {
         return new ResponseEntity<Object>(userService.createUser(user), HttpStatus.CREATED);
     }
 
+    @RequestMapping(value="/getUserByAccountNo", method=POST, produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<Object> getUserByAccountNo(@RequestBody AccountNoDTO accountNoDTO,
+                                                     @AuthenticationPrincipal User user) {
+        return new ResponseEntity<Object>(userService.getUserByAccountNo(accountNoDTO,user), HttpStatus.OK);
+    }
 }
