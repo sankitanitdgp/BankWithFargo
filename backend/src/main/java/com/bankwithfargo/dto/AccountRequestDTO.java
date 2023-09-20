@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,7 +16,7 @@ public class AccountRequestDTO {
     private String title;
     private String firstName;
     private String lastName;
-    private LocalDate dob;
+    private Date dob;
     private String fatherName;
     private String phone;
     private String presentAddress;

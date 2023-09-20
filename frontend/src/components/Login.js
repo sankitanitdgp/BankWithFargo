@@ -57,7 +57,14 @@ const Login = () => {
     UserLoginService.login(formData).then((res) => {
       console.log(res);
       cookies.set("token", res, { path: "/" });
-      navigate("/dashboard");
+      if (formData.email=="admin6@gmail.com")
+      {
+        navigate("/adminDashboard");
+      }
+      else{
+        navigate("/dashboard");
+      }
+      
       window.location.reload();
     });
     setSuccess("visible");

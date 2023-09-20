@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.checkerframework.common.aliasing.qual.Unique;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "account")
@@ -71,6 +71,9 @@ public class Account {
 
     @Column(name="mpin", nullable = false)
     private int mpin;
+
+    @Column(name="dob", nullable = false)
+    private Date dob;
 
     @NotNull
     @ManyToOne
