@@ -9,3 +9,12 @@
 .dropdown-toggle{
     min-width: 100%;
 }
+
+.error-msg{
+    width: fit-content;
+    margin: 10px auto 5px;
+}
+.balance{
+    width: fit-content;
+    margin: -20px auto -10px;
+}

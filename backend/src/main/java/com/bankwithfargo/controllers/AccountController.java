@@ -27,8 +27,9 @@ public class AccountController {
     }
 
     @PostMapping("/getTransactions")
-    public ResponseEntity<Object> getTransactions(@RequestBody TransactionRequestDTO accNo){
-        return new ResponseEntity<Object>(accountService.getTransactions(accNo),HttpStatus.OK);
+    public ResponseEntity<Object> getTransactions(@RequestBody TransactionRequestDTO accNo,
+                                                  @AuthenticationPrincipal User user){
+        return new ResponseEntity<Object>(accountService.getTransactions(accNo, user),HttpStatus.OK);
     }
 
     @PostMapping("/checkBalance")

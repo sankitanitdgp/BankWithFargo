@@ -36,11 +36,17 @@ public class AccountService {
             Account newAccount = new Account();
             BeanUtils.copyProperties(account, newAccount);
             newAccount.setAccountStatus(true);
-            newAccount.setDateOfOpening(LocalDate.now());
+            newAccount.setDateOfOpening(new Date());
             newAccount.setIfsc("IFSC0099123");
             newAccount.setBalance(0.0);
-            newAccount.setUser(user);
-            newAccount.setEmail(user.getEmail());
+
+            if(user.getEmail().equals("admin6@gmail.com")){
+                newAccount.setUser(userLoginRepository.findOneByEmail(account.getEmail()));
+                newAccount.setEmail(account.getEmail());
+            } else {
+                newAccount.setUser(user);
+                newAccount.setEmail(user.getEmail());
+            }
 
             long accountNumber = new Random().nextInt(0, Integer.MAX_VALUE);
             newAccount.setAccountNumber(accountNumber);
@@ -53,16 +59,13 @@ public class AccountService {
         return null;
     }
 
-    public List<Transaction> getTransactions(TransactionRequestDTO transactionRequestDTO) {
+    public List<Transaction> getTransactions(TransactionRequestDTO transactionRequestDTO, User user) {
         Long accNo=transactionRequestDTO.getAccNo();
         Account account=accountRepository.findByAccountNumber(accNo);
-        if(transactionRequestDTO.getMpin() != account.getMpin()){
+        if(!user.getEmail().equals("admin6@gmail.com") || transactionRequestDTO.getMpin() != account.getMpin()){
             //TODO: handle error
         }
-        List<Transaction> transactions=transactionRepository
-                .findAllBySenderAccNoOrReceiverAccNo(accNo,accNo);
-
-        return transactions;
+        return transactionRepository.findAllBySenderAccNoOrReceiverAccNo(accNo,accNo);
     }
 
     public Object checkBalance(CheckBalanceDTO checkBalanceDTO){
@@ -95,7 +98,10 @@ public class AccountService {
                 return "Incorrect MPIN";
             } else if(depositMoneyDTO.getAmount()<0) {
                 return "amount cannot be negative";
-            } else {
+            } else if(!account.getAccountStatus()) {
+                return "Sorry! Your account has been disabled by admin";
+            }
+            else {
                 account.setBalance(account.getBalance() + depositMoneyDTO.getAmount());
                 accountRepository.save(account);
                 return "Deposit successful";
@@ -113,8 +119,10 @@ public class AccountService {
                 return "Incorrect MPIN";
             } else if(depositMoneyDTO.getAmount()<0){
                 return "amount cannot be negative";
-            }else if(depositMoneyDTO.getAmount()>account.getBalance()){
+            } else if(depositMoneyDTO.getAmount()>account.getBalance()){
                 return "Insufficient balance";
+            } else if(!account.getAccountStatus()) {
+                return "Sorry! Your account has been disabled by admin";
             } else {
                 account.setBalance(account.getBalance() - depositMoneyDTO.getAmount());
                 accountRepository.save(account);
@@ -134,8 +142,12 @@ public class AccountService {
                 return "Incorrect MPIN";
             } else if(transferMoneyDTO.getAmount()<0){
                 return "amount cannot be negative";
-            }else if(transferMoneyDTO.getAmount()>senderAccount.getBalance()) {
+            } else if(transferMoneyDTO.getAmount()>senderAccount.getBalance()) {
                 return "Insufficient balance";
+            } else if(transferMoneyDTO.getSenderAccNumber().equals(transferMoneyDTO.getReceiverAccNumber())) {
+                return "Cannot transfer money to same account";
+            } else if(!senderAccount.getAccountStatus()) {
+                return "Sorry! Your account has been disabled by admin";
             } else {
                 Transaction transaction = new Transaction();
                 transaction.setSenderAccNo(transferMoneyDTO.getSenderAccNumber());
@@ -161,10 +173,12 @@ public class AccountService {
         return "An error occurred";
     }
 
+    @Transactional
     public String changeAccountStatus(AccountNoDTO accountNoDTO,User user){
         if(user.getEmail().equals("admin6@gmail.com")){
             Account account=accountRepository.findByAccountNumber(accountNoDTO.getAccNo());
-            account.setIsActive(!account.getIsActive());
+            account.setAccountStatus(!account.getAccountStatus());
+            System.out.println(account.getAccountStatus());
             return "Status updated";
         } else {
             return "Admin access required";

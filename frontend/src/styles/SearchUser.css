@@ -117,6 +117,15 @@ input:checked+.slider:before {
     transform: translateX(26px);
 }
 
+.spinner-div{
+    margin: 150px 50%;
+}
+
+.no-account-msg{
+    width: fit-content;
+    margin: 30px auto;
+}
+
 /* Responsive CSS */
 /* @media (max-width: 768px) {
     .container {

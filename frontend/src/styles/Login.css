@@ -1,16 +1,21 @@
 .form-errors{
-    color: red;
-    text-align: center;
+  color: red;
+  text-align: center;
 }
 .redirect {
-    text-align: left;
-      display: inline;
-      margin: auto;
-      padding-left: 12%;
-  }
+  text-align: left;
+  display: inline;
+  margin: auto;
+  padding-left: 12%;
+}
 .pwd-redirect{
-        text-align: right;
-        display: inline;
-        margin: auto;
-        padding-left: 26%;
-      }
+  text-align: right;
+  display: inline;
+  margin: auto;
+  padding-left: 26%;
+}
+.btn-spinner{
+  width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}

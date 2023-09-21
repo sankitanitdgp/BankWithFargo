@@ -8,42 +8,42 @@ import DepositMoneyModal from "./DepositMoneyModal";
 import SearchUser from "./SearchUser";
 
 function AdminDashboard() {
-  const [showSearchUser, setShowSearchUser] = useState(false);
-  const cookies = new Cookies();
-  const navigate = useNavigate();
+	const [showSearchUser, setShowSearchUser] = useState(false);
+	const cookies = new Cookies();
+	const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!cookies.get("token")) {
-      navigate("/login");
-    }
-  });
+	useEffect(() => {
+		if (!cookies.get("token")) {
+			navigate("/login");
+		}
+	});
 
-  return (
-    <>
-      <div>
-        <Link className="card-link" to="/openAccount">
-          <Card className="dashboard-card card-img-">
-            <Card.Body>Create account</Card.Body>
-          </Card>
-        </Link>
+	return (
+		<>
+			<div>
+				<Link className="card-link" to="/openAccount">
+					<Card className="dashboard-card card-img-">
+						<Card.Body>Create account</Card.Body>
+					</Card>
+				</Link>
 
-        <Link className="card-link" to="/searchUser">
-          <Card className="dashboard-card">
-            <Card.Body>Search User</Card.Body>
-          </Card>
-        </Link>
+				<Link className="card-link" to="/searchUser">
+					<Card className="dashboard-card">
+						<Card.Body>Search User</Card.Body>
+					</Card>
+				</Link>
 
-        <Link className="card-link" to="/transactions">
-          <Card className="dashboard-card">
-            <Card.Body>View User Transactions</Card.Body>
-          </Card>
-        </Link>
-        {/* {showSearchUser && (
+				<Link className="card-link" to="/adminTransactions">
+					<Card className="dashboard-card">
+						<Card.Body>View User Transactions</Card.Body>
+					</Card>
+				</Link>
+				{/* {showSearchUser && (
           <SearchUser show={showSearchUser} setShow={setShowSearchUser} />
         )} */}
-      </div>
-    </>
-  );
+			</div>
+		</>
+	);
 }
 
 export default AdminDashboard;

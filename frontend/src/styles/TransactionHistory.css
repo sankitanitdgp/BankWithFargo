@@ -39,3 +39,9 @@
     margin: 20px auto 10px;
     width: fit-content;
   }
+
+  .no-transaction-msg {
+    width: fit-content;
+    margin: 50px auto;
+
+  }
