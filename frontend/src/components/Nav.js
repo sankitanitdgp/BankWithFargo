@@ -18,8 +18,8 @@ function NavMe() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto align-right-nav-item">
-            {!token && <Nav.Link className="nav-item" href="/">Home</Nav.Link>}
-            {!token && <Nav.Link className="nav-item" href="/login">Login</Nav.Link>}
+            {/* {!token && <Nav.Link className="nav-item" href="/home">Home</Nav.Link>} */}
+            {!token && <Nav.Link className="nav-item" href="/">Login</Nav.Link>}
             {!token && <Nav.Link className="nav-item" href="/signup">Signup</Nav.Link>}
             {token && <Nav.Link className="nav-item" href="/dashboard">Dashboard</Nav.Link>}
             {token && <Nav.Link className="nav-item" href="/logout">Logout</Nav.Link>}

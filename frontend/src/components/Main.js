@@ -5,15 +5,23 @@ import Nav from "./Nav";
 import Body from "./Body";
 import Cookies from "universal-cookie";
 
-const Home = () => {
+const Main = () => {
   const cookies=new Cookies();
   const navigate=useNavigate();
-  
+  useEffect(()=>{
+    if(cookies.get("token"))
+    navigate("/dashboard")
+    else{
+        navigate("/home")
+    }
+  },[])
   return (
     <>
-      <Body/>
+      <Nav />
+ 
+      <Outlet />
     </>
   );
 };
 
-export default Home;
+export default Main;

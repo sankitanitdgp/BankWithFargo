@@ -174,14 +174,14 @@ public class AccountService {
     }
 
     @Transactional
-    public String changeAccountStatus(AccountNoDTO accountNoDTO,User user){
+    public Boolean changeAccountStatus(AccountNoDTO accountNoDTO,User user){
         if(user.getEmail().equals("admin6@gmail.com")){
             Account account=accountRepository.findByAccountNumber(accountNoDTO.getAccNo());
             account.setAccountStatus(!account.getAccountStatus());
             System.out.println(account.getAccountStatus());
-            return "Status updated";
+            return account.getAccountStatus();
         } else {
-            return "Admin access required";
+            return null;
         }
     }
 

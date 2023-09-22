@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Form, Button, Container, Row, Col, Spinner } from "react-bootstrap";
 import "../styles/Login.css";
 import { UserService } from "../service/UserService";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, Outlet, redirect, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
+import Nav from "./Nav";
 
 const Login = () => {
 	const [formData, setFormData] = useState({
@@ -69,12 +70,13 @@ const Login = () => {
 				}
 			}
 
-			// window.location.reload();
+			window.location.reload();
 		});
 		setSuccess("visible");
 	};
 
 	return (
+		
 		<Container>
 			<Row className="justify-content-center">
 				<Col md={6}>
@@ -145,6 +147,7 @@ const Login = () => {
 				</Col>
 			</Row>
 		</Container>
+		
 	);
 };
 

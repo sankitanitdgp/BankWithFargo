@@ -14,6 +14,7 @@ function SearchUser() {
 	const [accounts, setAccounts] = useState([]);
 	const [enable, setEnable] = useState();
 	const [showEmptyValueError, setShowEmptyValueError] = useState(false);
+	const [statusArray, setStatusArray]=useState([]);
 
 	// Function to handle account number input change
 	const handleAccountNumberChange = (event) => {
@@ -47,7 +48,7 @@ function SearchUser() {
 	};
 
 	// Function to toggle account status
-	const toggleAccountStatus = (accountNumber) => {
+	const toggleAccountStatus = (accountNumber,i) => {
 		// setAccounts((prevData) =>
 		// 	prevData.map((user) => {
 		// 		if (user.accountNumber === accountNumber) {
@@ -56,6 +57,7 @@ function SearchUser() {
 		// 		return user;
 		// 	})
 		//);
+		console.log(i);
 		const config = {
 			headers: { Authorization: `Bearer ${cookies.get("token")}` },
 		};
@@ -68,8 +70,12 @@ function SearchUser() {
 			if (res.status && res.status === 401) {
 				navigate("/login");
 			} else {
-				//window.location.reload();
-				console.log(res);
+				window.location.reload();
+				console.log("res",res);
+				var arr=statusArray;
+				arr[i]=res;
+				setStatusArray(arr);
+				console.log("arr=",arr);
 			}
 		});
 	};
@@ -100,6 +106,13 @@ function SearchUser() {
 				navigate("/login");
 			} else {
 				setAccounts(res);
+				console.log(res);
+				setStatusArray(res.map((acc)=>{
+					return acc.accountStatus;
+				}))
+				console.log(res.map((acc)=>{
+					return acc.accountStatus;
+				}));
 			}
 		});
 	}, []);
@@ -144,7 +157,7 @@ function SearchUser() {
 						</tr>
 					</thead>
 					<tbody>
-						{accounts.map((user) => (
+						{accounts.map((user,i) => (
 							<tr key={user.accountNumber}>
 								<td>{user.accountNumber}</td>
 								<td>{`${user.title} ${user.firstName} ${user.lastName}`}</td>
@@ -153,8 +166,8 @@ function SearchUser() {
 									<label className="switch">
 										<input
 											type="checkbox"
-											checked={user.accountStatus}
-											onChange={() => toggleAccountStatus(user.accountNumber)}
+											checked={statusArray[i]}
+											onChange={() => toggleAccountStatus(user.accountNumber,i)}
 										/>
 										<span className="slider round"></span>
 									</label>
