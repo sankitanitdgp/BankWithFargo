@@ -36,6 +36,7 @@ const OpenAccount = (props) => {
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState("hidden");
   const handleTitleChange = (e) => {
+    console.log(e.target.value);
     const { name, value } = e.target;
     setFormData({ ...formData, title: value });
   };
@@ -155,9 +156,9 @@ const OpenAccount = (props) => {
                   required
                 >
                   <option value="">Select</option>
-                  <option value="Mr">Miss</option>
-                  <option value="Miss">Mr.</option>
-                  <option value="Mrs">Mrs.</option>
+                  <option value="Miss">Miss</option>
+                  <option value="Mr.">Mr.</option>
+                  <option value="Mrs.">Mrs.</option>
                 </select>
                 <div className="dropdown-arrow"></div>
               </div>
