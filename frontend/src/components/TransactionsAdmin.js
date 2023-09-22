@@ -1,18 +1,16 @@
-import React, { Component, useEffect, useState } from "react";
-import "../styles/TransactionHistory.css";
-import txn from "../utils/txn";
-import Cookies from "universal-cookie";
-import { useNavigate } from "react-router";
+import React, { useEffect, useState } from "react";
 import {
-	Dropdown,
 	Button,
+	Dropdown,
 	DropdownButton,
 	Form,
 	Spinner,
 } from "react-bootstrap";
-import { AccountService } from "../service/AccountService";
+import { useNavigate } from "react-router";
+import Cookies from "universal-cookie";
 import { TransactionHistoryService } from "../service/TransactionHistoryService";
 import { UserService } from "../service/UserService";
+import "../styles/TransactionHistory.css";
 
 function TransactionHistory() {
 	const [transactions, setTransactions] = useState([]);
@@ -82,13 +80,16 @@ function TransactionHistory() {
 					autocomplete="off"
 					className="Form-grp modal-form-grp"
 				>
-					<Form.Label>Select Account</Form.Label>
-					<DropdownButton
+					
+	  				<Dropdown
 						title={selectedAcc}
 						onSelect={(e) => {
 							setSelectedAcc(e);
 						}}
 					>
+						<Dropdown.Toggle variant="success" id="dropdown-basic drop-btn">
+        Select Account
+      </Dropdown.Toggle>
 						<Dropdown.Menu>
 							{accounts.map((acc) => (
 								<Dropdown.Item eventKey={acc.accountNumber}>
@@ -96,7 +97,7 @@ function TransactionHistory() {
 								</Dropdown.Item>
 							))}
 						</Dropdown.Menu>
-					</DropdownButton>
+					</Dropdown>
 				</Form.Group>
 			</Form>
 			<div>{error}</div>
@@ -131,7 +132,7 @@ function TransactionHistory() {
 								<td>{transaction.transactionId}</td>
 								<td>{transaction.senderAccNo}</td>
 								<td>{transaction.receiverAccNo}</td>
-								<td>{transaction.amount}</td>
+								<td style={transaction.senderAccNo===selectedAcc? {color:"red"}:{color:"green"}}>{transaction.amount}</td>
 								<td>{new Date(transaction.timeStamp).toLocaleString()}</td>
 							</tr>
 						))}

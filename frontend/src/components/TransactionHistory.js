@@ -68,6 +68,8 @@ function TransactionHistory() {
 				setTransactions(res);
 				setShowSpinner(false);
 				if (res.length === 0) setNoTransactionMsg("No transactions to show");
+				console.log("selectedacc",selectedAcc," ",res);
+				console.log(typeof(selectedAcc), typeof(res[0].senderAccNo));
 			}
 		});
 	};
@@ -141,6 +143,7 @@ function TransactionHistory() {
 							<th>Sender's Acc No.</th>
 							<th>Receiver's Acc No.</th>
 							<th>Amount</th>
+							<th>Status</th>
 							<th>Timestamp</th>
 						</tr>
 					</thead>
@@ -151,6 +154,9 @@ function TransactionHistory() {
 								<td>{transaction.senderAccNo}</td>
 								<td>{transaction.receiverAccNo}</td>
 								<td>{transaction.amount}</td>
+								{transaction.senderAccNo===parseInt(selectedAcc)?<td style={{color:"red"}}>DEBIT</td>:
+								<td style={{color:"green"}}>CREDIT</td>}
+								{/* <td style={transaction.senderAccNo===selectedAcc? {color:"red"}:{color:"green"}}>{transaction.amount}</td> */}
 								<td>{new Date(transaction.timeStamp).toLocaleString()}</td>
 							</tr>
 						))}

@@ -45,3 +45,14 @@
     margin: 50px auto;
 
   }
+/* 
+  #dropdown-basic{
+    background-color: #007bff !important;
+  } */
+
+
+  .dropdown-menu{
+    width: 44vw;
+    opacity: 0.91;
+
+  }
