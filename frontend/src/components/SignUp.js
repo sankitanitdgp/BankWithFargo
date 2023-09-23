@@ -87,7 +87,7 @@ const SignUp = () => {
 	};
 
 	return (
-		<Container>
+		<Container className="container-class">
 			<Row className="justify-content-center">
 				<Col md={6}>
 					<h2 className="text-center">Sign Up</h2>

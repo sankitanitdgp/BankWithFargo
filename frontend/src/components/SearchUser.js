@@ -4,7 +4,7 @@ import { UserService } from "../service/UserService";
 import { useNavigate } from "react-router";
 import Cookies from "universal-cookie";
 import { AccountService } from "../service/AccountService";
-import { Spinner } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 
 function SearchUser() {
 	const [searchAccount, setSearchAccount] = useState("");
@@ -14,7 +14,7 @@ function SearchUser() {
 	const [accounts, setAccounts] = useState([]);
 	const [enable, setEnable] = useState();
 	const [showEmptyValueError, setShowEmptyValueError] = useState(false);
-	const [statusArray, setStatusArray]=useState([]);
+	const [statusArray, setStatusArray] = useState([]);
 
 	// Function to handle account number input change
 	const handleAccountNumberChange = (event) => {
@@ -48,7 +48,7 @@ function SearchUser() {
 	};
 
 	// Function to toggle account status
-	const toggleAccountStatus = (accountNumber,i) => {
+	const toggleAccountStatus = (accountNumber, i) => {
 		// setAccounts((prevData) =>
 		// 	prevData.map((user) => {
 		// 		if (user.accountNumber === accountNumber) {
@@ -71,11 +71,11 @@ function SearchUser() {
 				navigate("/login");
 			} else {
 				window.location.reload();
-				console.log("res",res);
-				var arr=statusArray;
-				arr[i]=res;
+				console.log("res", res);
+				var arr = statusArray;
+				arr[i] = res;
 				setStatusArray(arr);
-				console.log("arr=",arr);
+				console.log("arr=", arr);
 			}
 		});
 	};
@@ -107,18 +107,22 @@ function SearchUser() {
 			} else {
 				setAccounts(res);
 				console.log(res);
-				setStatusArray(res.map((acc)=>{
-					return acc.accountStatus;
-				}))
-				console.log(res.map((acc)=>{
-					return acc.accountStatus;
-				}));
+				setStatusArray(
+					res.map((acc) => {
+						return acc.accountStatus;
+					})
+				);
+				console.log(
+					res.map((acc) => {
+						return acc.accountStatus;
+					})
+				);
 			}
 		});
 	}, []);
 
 	return (
-		<div>
+		<Container className="container-class">
 			<h1>
 				<center>Search User Details</center>
 			</h1>
@@ -157,7 +161,7 @@ function SearchUser() {
 						</tr>
 					</thead>
 					<tbody>
-						{accounts.map((user,i) => (
+						{accounts.map((user, i) => (
 							<tr key={user.accountNumber}>
 								<td>{user.accountNumber}</td>
 								<td>{`${user.title} ${user.firstName} ${user.lastName}`}</td>
@@ -167,7 +171,9 @@ function SearchUser() {
 										<input
 											type="checkbox"
 											checked={statusArray[i]}
-											onChange={() => toggleAccountStatus(user.accountNumber,i)}
+											onChange={() =>
+												toggleAccountStatus(user.accountNumber, i)
+											}
 										/>
 										<span className="slider round"></span>
 									</label>
@@ -177,7 +183,7 @@ function SearchUser() {
 					</tbody>
 				</table>
 			)}
-		</div>
+		</Container>
 	);
 }
 export default SearchUser;

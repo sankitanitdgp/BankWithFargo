@@ -10,6 +10,9 @@ import com.bankwithfargo.repository.UserLoginRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -59,27 +62,25 @@ public class AccountService {
         return null;
     }
 
-    public List<Transaction> getTransactions(TransactionRequestDTO transactionRequestDTO, User user) {
+    public ResponseEntity<Object> getTransactions(TransactionRequestDTO transactionRequestDTO, User user) {
         Long accNo=transactionRequestDTO.getAccNo();
         Account account=accountRepository.findByAccountNumber(accNo);
-        if(!user.getEmail().equals("admin6@gmail.com") || transactionRequestDTO.getMpin() != account.getMpin()){
-            //TODO: handle error
+        if(!user.getEmail().equals("admin6@gmail.com") && transactionRequestDTO.getMpin() != account.getMpin()){
+            System.out.println(transactionRequestDTO.getMpin()+"\n"+account.getMpin());
+            return new ResponseEntity<>("Incorrect MPIN", HttpStatus.UNAUTHORIZED);
         }
-        return transactionRepository.findAllBySenderAccNoOrReceiverAccNo(accNo,accNo);
+        List<Transaction> transactions= transactionRepository.findAllBySenderAccNoOrReceiverAccNo(accNo,accNo);
+        return ResponseEntity.ok(transactions);
     }
 
     public Object checkBalance(CheckBalanceDTO checkBalanceDTO){
        Account account=accountRepository.findByAccountNumber(checkBalanceDTO.getAccNo());
        if(account==null)
-       {
            return "Account does not exist.";
-       }
-
-       if(account.getMpin() != checkBalanceDTO.getMpin())
-       {
+       else if(account.getMpin() != checkBalanceDTO.getMpin())
            return "Incorrect MPIN";
-       }
-       return account.getBalance();
+       else
+           return account.getBalance();
 
     }
     public List<Account> getAllAccountsByUser(User user){
@@ -97,14 +98,14 @@ public class AccountService {
             if(depositMoneyDTO.getMpin() != account.getMpin()){
                 return "Incorrect MPIN";
             } else if(depositMoneyDTO.getAmount()<0) {
-                return "amount cannot be negative";
+                return "Amount cannot be negative";
             } else if(!account.getAccountStatus()) {
                 return "Sorry! Your account has been disabled by admin";
             }
             else {
                 account.setBalance(account.getBalance() + depositMoneyDTO.getAmount());
                 accountRepository.save(account);
-                return "Deposit successful";
+                return "Money deposited successfully!";
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -118,7 +119,7 @@ public class AccountService {
             if(depositMoneyDTO.getMpin() != account.getMpin()){
                 return "Incorrect MPIN";
             } else if(depositMoneyDTO.getAmount()<0){
-                return "amount cannot be negative";
+                return "Amount cannot be negative";
             } else if(depositMoneyDTO.getAmount()>account.getBalance()){
                 return "Insufficient balance";
             } else if(!account.getAccountStatus()) {
@@ -126,7 +127,7 @@ public class AccountService {
             } else {
                 account.setBalance(account.getBalance() - depositMoneyDTO.getAmount());
                 accountRepository.save(account);
-                return "Money withdrawn successfully";
+                return "Money withdrawn successfully!";
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -137,7 +138,7 @@ public class AccountService {
     public String transferMoney(TransferMoneyDTO transferMoneyDTO){
         try{
             Account senderAccount=accountRepository.findByAccountNumber(transferMoneyDTO.getSenderAccNumber());
-            Account receiverAccount=accountRepository.findByAccountNumber(transferMoneyDTO.getReceiverAccNumber());
+//            Account receiverAccount=accountRepository.findByAccountNumber(transferMoneyDTO.getReceiverAccNumber());
             if(transferMoneyDTO.getMpin() != senderAccount.getMpin()){
                 return "Incorrect MPIN";
             } else if(transferMoneyDTO.getAmount()<0){
@@ -161,10 +162,10 @@ public class AccountService {
                 transactionRepository.save(transaction);
                 senderAccount.setBalance(senderAccount.getBalance() - transferMoneyDTO.getAmount());
                 accountRepository.save(senderAccount);
-                receiverAccount.setBalance(receiverAccount.getBalance() + transferMoneyDTO.getAmount());
-                accountRepository.save(receiverAccount);
+//                receiverAccount.setBalance(receiverAccount.getBalance() + transferMoneyDTO.getAmount());
+//                accountRepository.save(receiverAccount);
 
-                return "Transfer Successful";
+                return "Money transferred successfully!";
             }
 
         } catch(Exception e){

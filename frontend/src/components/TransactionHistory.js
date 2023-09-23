@@ -47,29 +47,32 @@ function TransactionHistory() {
 		});
 	}, []);
 
-	const handleSubmitAccount = () => {
+	const handleSubmitAccount = (e) => {
+		e.preventDefault();
 		setShowSpinner(true);
+		setTransactions([]);
 		const config = {
 			headers: { Authorization: `Bearer ${cookies.get("token")}` },
 		};
 		TransactionHistoryService.getTransactions(
 			{
 				accNo: selectedAcc,
+				mpin: mpin,
 			},
 			config
 		).then((res) => {
 			console.log("transaction", res);
 			if (res.status && res.status === 401) {
 				navigate("/login");
-			} else if (res === "Incorrect MPIN") {
-				setError(res);
+			} else if (res.body === "Incorrect MPIN") {
+				setError(res.body);
+				setShowSpinner(false);
 			} else {
 				setError("");
-				setTransactions(res);
+				setTransactions(res.body);
 				setShowSpinner(false);
-				if (res.length === 0) setNoTransactionMsg("No transactions to show");
-				console.log("selectedacc",selectedAcc," ",res);
-				console.log(typeof(selectedAcc), typeof(res[0].senderAccNo));
+				if (res.body.length === 0)
+					setNoTransactionMsg("No transactions to show");
 			}
 		});
 	};
@@ -83,15 +86,18 @@ function TransactionHistory() {
 				<Form.Group
 					controlId="mpin"
 					autocomplete="off"
-					className="Form-grp modal-form-grp"
+					className="Form-grp modal-form-grp transaction-admin"
 				>
 					<Form.Label>Select Account</Form.Label>
-					<DropdownButton
+					<Dropdown
 						title={selectedAcc}
 						onSelect={(e) => {
 							setSelectedAcc(e);
 						}}
 					>
+						<Dropdown.Toggle variant="primary" id="dropdown-basic drop-btn">
+							{selectedAcc}
+						</Dropdown.Toggle>
 						<Dropdown.Menu>
 							{accounts.map((acc) => (
 								<Dropdown.Item eventKey={acc.accountNumber}>
@@ -99,13 +105,14 @@ function TransactionHistory() {
 								</Dropdown.Item>
 							))}
 						</Dropdown.Menu>
-					</DropdownButton>
+					</Dropdown>
 				</Form.Group>
 
 				<Form.Group
 					controlId="mpin"
 					autocomplete="off"
-					className="Form-grp modal-form-grp"
+					className="Form-grp modal-form-grp transaction-admin"
+					style={{ marginTop: "-10px" }}
 				>
 					<Form.Label>MPIN</Form.Label>
 					<Form.Control
@@ -118,14 +125,23 @@ function TransactionHistory() {
 						}}
 						required
 					/>
+					<div
+						className="submit-transactions-btn-div"
+						style={{ marginTop: "20px" }}
+					>
+						<Button
+							className="submit-transaction-btn"
+							variant="outline-primary"
+							type="submit"
+							onClick={handleSubmitAccount}
+						>
+							Submit
+						</Button>
+					</div>
 				</Form.Group>
 			</Form>
-			<div>{error}</div>
-			<div className="submit-transactions-btn">
-				<Button variant="primary" type="submit" onClick={handleSubmitAccount}>
-					Submit
-				</Button>
-			</div>
+			<div className="transaction-error-msg">{error}</div>
+
 			<br></br>
 			{showSpinner ? (
 				<div className="spinner-div">
@@ -154,8 +170,11 @@ function TransactionHistory() {
 								<td>{transaction.senderAccNo}</td>
 								<td>{transaction.receiverAccNo}</td>
 								<td>{transaction.amount}</td>
-								{transaction.senderAccNo===parseInt(selectedAcc)?<td style={{color:"red"}}>DEBIT</td>:
-								<td style={{color:"green"}}>CREDIT</td>}
+								{transaction.senderAccNo === parseInt(selectedAcc) ? (
+									<td style={{ color: "red" }}>DEBIT</td>
+								) : (
+									<td style={{ color: "green" }}>CREDIT</td>
+								)}
 								{/* <td style={transaction.senderAccNo===selectedAcc? {color:"red"}:{color:"green"}}>{transaction.amount}</td> */}
 								<td>{new Date(transaction.timeStamp).toLocaleString()}</td>
 							</tr>

@@ -35,15 +35,19 @@
     padding: 12px;
   }
   
-  .submit-transactions-btn{
+  .submit-transactions-btn-div{
     margin: 20px auto 10px;
-    width: fit-content;
+    /* width: fit-content; */
   }
 
   .no-transaction-msg {
     width: fit-content;
     margin: 50px auto;
 
+  }
+
+  .submit-transaction-btn{
+    width: 100%;
   }
 /* 
   #dropdown-basic{
@@ -52,7 +56,19 @@
 
 
   .dropdown-menu{
-    width: 44vw;
+    width: 100%;
     opacity: 0.91;
 
+  }
+
+  .transaction-error-msg{
+    width: fit-content;
+    color: red;
+    margin: 10px auto 0;
+  }
+
+  .transaction-admin{
+    margin: 20px auto;
+    width: 70%;
+    margin-top: 40px;
   }

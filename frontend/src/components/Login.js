@@ -76,8 +76,7 @@ const Login = () => {
 	};
 
 	return (
-		
-		<Container>
+		<Container className="container-class">
 			<Row className="justify-content-center">
 				<Col md={6}>
 					<h3 className="text-center">Login</h3>
@@ -147,7 +146,6 @@ const Login = () => {
 				</Col>
 			</Row>
 		</Container>
-		
 	);
 };
 

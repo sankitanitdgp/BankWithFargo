@@ -24,6 +24,7 @@ function WithdrawMoneyModal(props) {
 	const navigate = useNavigate();
 	const cookies = new Cookies();
 	const [showSpinner, setShowSpinner] = useState(false);
+	const [error, setError] = useState(false);
 
 	const handleClose = () => props.setShow(false);
 
@@ -39,7 +40,7 @@ function WithdrawMoneyModal(props) {
 				setAccounts(res.data);
 			}
 		});
-	});
+	}, []);
 
 	const handleSubmitAccount = () => {
 		setShowSpinner(true);
@@ -58,6 +59,8 @@ function WithdrawMoneyModal(props) {
 			if (res.status && res.status === 401) {
 				navigate("/login");
 			} else {
+				if (res === "Money withdrawn successfully!") setError(false);
+				else setError(true);
 				setMessage(res);
 			}
 		});
@@ -77,12 +80,15 @@ function WithdrawMoneyModal(props) {
 						className="Form-grp modal-form-grp"
 					>
 						<Form.Label>Select Account</Form.Label>
-						<DropdownButton
+						<Dropdown
 							title={selectedAcc}
 							onSelect={(e) => {
 								setSelectedAcc(e);
 							}}
 						>
+							<Dropdown.Toggle variant="primary" id="dropdown-basic drop-btn">
+								{selectedAcc}
+							</Dropdown.Toggle>
 							<Dropdown.Menu>
 								{accounts.map((acc) => (
 									<Dropdown.Item eventKey={acc.accountNumber}>
@@ -90,7 +96,7 @@ function WithdrawMoneyModal(props) {
 									</Dropdown.Item>
 								))}
 							</Dropdown.Menu>
-						</DropdownButton>
+						</Dropdown>
 					</Form.Group>
 
 					<Form.Group
@@ -129,7 +135,13 @@ function WithdrawMoneyModal(props) {
 						/>
 					</Form.Group>
 				</Form>
-				<div className="deposit-money-msg">{message}</div>
+				{error && <div className="deposit-money-msg error-msg">{message}</div>}
+				{!error && (
+					<div className="deposit-money-msg">
+						{message !== "" && <i className="fas fa-check tick-icon"></i>}
+						{message}
+					</div>
+				)}
 				<Button
 					className="check-balance-btn"
 					variant="primary"

@@ -46,7 +46,8 @@ function TransactionHistory() {
 		});
 	}, []);
 
-	const handleSubmitAccount = () => {
+	const handleSubmitAccount = (e) => {
+		e.preventDefault();
 		setShowSpinner(true);
 		const config = {
 			headers: { Authorization: `Bearer ${cookies.get("token")}` },
@@ -57,14 +58,15 @@ function TransactionHistory() {
 			},
 			config
 		).then((res) => {
-			console.log("transaction", res);
+			console.log("transaction", res.body);
 			if (res.status && res.status === 401) {
 				navigate("/login");
 			} else {
 				setError("");
-				setTransactions(res);
+				setTransactions(res.body);
 				setShowSpinner(false);
-				if (res.length === 0) setNoTransactionMsg("No transactions to show");
+				if (res.body.length === 0)
+					setNoTransactionMsg("No transactions to show");
 			}
 		});
 	};
@@ -78,18 +80,19 @@ function TransactionHistory() {
 				<Form.Group
 					controlId="mpin"
 					autocomplete="off"
-					className="Form-grp modal-form-grp"
+					className="Form-grp modal-form-grp transaction-admin"
 				>
-					
-	  				<Dropdown
+					<Form.Label>Select Account</Form.Label>
+					<Dropdown
 						title={selectedAcc}
 						onSelect={(e) => {
+							console.log(e);
 							setSelectedAcc(e);
 						}}
 					>
-						<Dropdown.Toggle variant="success" id="dropdown-basic drop-btn">
-        Select Account
-      </Dropdown.Toggle>
+						<Dropdown.Toggle variant="primary" id="dropdown-basic drop-btn">
+							{selectedAcc}
+						</Dropdown.Toggle>
 						<Dropdown.Menu>
 							{accounts.map((acc) => (
 								<Dropdown.Item eventKey={acc.accountNumber}>
@@ -98,14 +101,20 @@ function TransactionHistory() {
 							))}
 						</Dropdown.Menu>
 					</Dropdown>
+					<div className="submit-transactions-btn-div">
+						<Button
+							variant="outline-primary"
+							type="submit"
+							onClick={handleSubmitAccount}
+							className="submit-transaction-btn"
+						>
+							Submit
+						</Button>
+					</div>
 				</Form.Group>
 			</Form>
 			<div>{error}</div>
-			<div className="submit-transactions-btn">
-				<Button variant="primary" type="submit" onClick={handleSubmitAccount}>
-					Submit
-				</Button>
-			</div>
+
 			<br></br>
 			{showSpinner ? (
 				<div className="spinner-div">
@@ -132,7 +141,7 @@ function TransactionHistory() {
 								<td>{transaction.transactionId}</td>
 								<td>{transaction.senderAccNo}</td>
 								<td>{transaction.receiverAccNo}</td>
-								<td style={transaction.senderAccNo===selectedAcc? {color:"red"}:{color:"green"}}>{transaction.amount}</td>
+								<td>{transaction.amount}</td>
 								<td>{new Date(transaction.timeStamp).toLocaleString()}</td>
 							</tr>
 						))}

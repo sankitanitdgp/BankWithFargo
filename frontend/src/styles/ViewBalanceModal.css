@@ -13,6 +13,7 @@
 .error-msg{
     width: fit-content;
     margin: 10px auto 5px;
+    color: red;
 }
 .balance{
     width: fit-content;

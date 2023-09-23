@@ -81,12 +81,15 @@ function ViewBalanceModal(props) {
 						className="Form-grp modal-form-grp"
 					>
 						<Form.Label>Select Account</Form.Label>
-						<DropdownButton
+						<Dropdown
 							title={selectedAcc}
 							onSelect={(e) => {
 								setSelectedAcc(e);
 							}}
 						>
+							<Dropdown.Toggle variant="primary" id="dropdown-basic drop-btn">
+								{selectedAcc}
+							</Dropdown.Toggle>
 							<Dropdown.Menu>
 								{accounts.map((acc) => (
 									<Dropdown.Item eventKey={acc.accountNumber}>
@@ -94,7 +97,7 @@ function ViewBalanceModal(props) {
 									</Dropdown.Item>
 								))}
 							</Dropdown.Menu>
-						</DropdownButton>
+						</Dropdown>
 					</Form.Group>
 
 					<Form.Group
@@ -118,6 +121,7 @@ function ViewBalanceModal(props) {
 				<div className="error-msg">{error}</div>
 				{showBalance && (
 					<Modal.Body className="balance">
+						<i className="fas fa-check tick-icon"></i>
 						Your balance is Rs.{balance}
 					</Modal.Body>
 				)}
