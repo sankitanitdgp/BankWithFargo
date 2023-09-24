@@ -40,3 +40,33 @@
 .deposit-money-card{
     margin-left: 25px;
 }
+
+.card-div{
+    display: inline-block;
+    width: 80%;
+    padding: 40px;
+    border-radius: 15px;
+    margin-top: 25px;
+    margin-left: 10%;
+    cursor: pointer;
+    color: #36454F;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-div:hover {
+    opacity: 0.7;
+}
+
+.card-icon-div{
+    width: fit-content;
+    margin: -40px auto;
+    font-size: 120px;
+}
+
+.card-title{
+    width: fit-content;
+    margin: 10px auto;
+    margin-top: 50px;
+    color: black;
+    font-size: 16px;
+}

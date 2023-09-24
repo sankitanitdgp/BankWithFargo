@@ -13,10 +13,10 @@ function NavMe() {
 	}, [token]);
 
 	return (
-		<Navbar expand="lg" className="bg-body-tertiary">
+		<Navbar expand="lg" className="bg-body-tertiary custom-navbar">
 			<Container>
 				<Link style={{ textDecoration: "none" }} to="/">
-					<Navbar.Brand className="">
+					<Navbar.Brand className="brand-name">
 						<span className="brand-font"> B</span>ank{" "}
 						<span className="brand-font"> W</span>ith{" "}
 						<span className="brand-font"> F</span>argo

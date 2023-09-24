@@ -10,3 +10,11 @@
 .brand-font{
     font-family: 'Croissant One', cursive;
 }
+
+.navbar{
+    padding: 18px;
+}
+
+.brand-name{
+    margin-left: -60px;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import "../styles/Dashboard.css";
 import { Link, useNavigate } from "react-router-dom";
 import ViewBalanceModal from "./ViewBalanceModal";
@@ -21,26 +21,38 @@ function AdminDashboard() {
 	return (
 		<>
 			<div>
-				<Link className="card-link" to="/openAccount">
-					<Card className="dashboard-card card-img-">
-						<Card.Body>Create account</Card.Body>
-					</Card>
-				</Link>
-
-				<Link className="card-link" to="/searchUser">
-					<Card className="dashboard-card">
-						<Card.Body>Search User</Card.Body>
-					</Card>
-				</Link>
-
-				<Link className="card-link" to="/adminTransactions">
-					<Card className="dashboard-card">
-						<Card.Body>View User Transactions</Card.Body>
-					</Card>
-				</Link>
-				{/* {showSearchUser && (
-          <SearchUser show={showSearchUser} setShow={setShowSearchUser} />
-        )} */}
+				<Row>
+					<Col>
+						<Link to="/openAccount" style={{ color: "black" }}>
+							<div className="card-div">
+								<div className="card-icon-div">
+									<i class="fas fa-university"></i>
+								</div>
+								<div className="card-title">Open a new account</div>
+							</div>
+						</Link>
+					</Col>
+					<Col>
+						<Link to="/searchUser" style={{ color: "black" }}>
+							<div className="card-div">
+								<div className="card-icon-div">
+									<i class="fas fa-users"></i>
+								</div>
+								<div className="card-title">Search for User</div>
+							</div>
+						</Link>
+					</Col>
+					<Col>
+						<Link to="/adminTransactions" style={{ color: "black" }}>
+							<div className="card-div">
+								<div className="card-icon-div">
+									<i class="fas fa-wallet"></i>
+								</div>
+								<div className="card-title">View Transactions</div>
+							</div>
+						</Link>
+					</Col>
+				</Row>
 			</div>
 		</>
 	);
