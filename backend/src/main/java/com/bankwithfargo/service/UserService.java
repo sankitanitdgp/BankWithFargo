@@ -1,16 +1,14 @@
 package com.bankwithfargo.service;
 
-import com.bankwithfargo.dto.AccountNoDTO;
 import com.bankwithfargo.dto.UserLoginRequestDTO;
 import com.bankwithfargo.dto.UserSignupRequestDTO;
-import com.bankwithfargo.model.Account;
 import com.bankwithfargo.model.User;
-import com.bankwithfargo.repository.AccountRepository;
 import com.bankwithfargo.repository.UserLoginRepository;
 import com.bankwithfargo.security.JwtTokenProvider;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
@@ -23,21 +21,20 @@ public class UserService {
     UserLoginRepository userRepository;
 
     @Autowired
-    AccountRepository accountRepository;
-
-    @Autowired
     JwtTokenProvider jwtTokenProvider;
-    public List<Account> getAllUsers(User user){
-        if(user.getEmail().equals("admin6@gmail.com"))
-            return accountRepository.findAll();
-        else return null;
-//        ArrayList<UserLoginRequestDTO> returnValue = new ArrayList<>();
-//        BeanUtils.copyProperties(users, returnValue);
-//        return returnValue;
+
+    public UserService( UserLoginRepository userRepository, JwtTokenProvider jwtTokenProvider) {
+        this.userRepository = userRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
+    public List<User> getAllUsers(){
+        List<User> users = userRepository.findAll();
+        return users;
     }
 
     @Transactional
-    public String createUser(UserSignupRequestDTO user){
+    public User createUser(UserSignupRequestDTO user){
 
         User u= userRepository.findOneByEmail(user.getEmail());
         if(u==null) {
@@ -45,25 +42,12 @@ public class UserService {
                 User newUser = new User();
                 BeanUtils.copyProperties(user, newUser);
                 userRepository.save(newUser);
-                return "User Registered Successfully";
+                return newUser;
             } catch (Exception e) {
-                return e.getMessage();
+                System.out.println(e.getMessage());
             }
-        } else {
-            return "User already exists";
         }
-    }
-
-    public Account getUserByAccountNo(AccountNoDTO accountNoDTO, User user) {
-        System.out.println("account no - " + accountNoDTO.getAccNo());
-        if (user.getEmail().equals("admin6@gmail.com")){
-            System.out.println("in admin");
-        return accountRepository.findByAccountNumber(accountNoDTO.getAccNo());
-        } else{
-            System.out.println("in user");
-            return null;
-        }
-
+        return null;
     }
 
 }

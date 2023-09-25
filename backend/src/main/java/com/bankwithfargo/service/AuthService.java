@@ -16,8 +16,10 @@ public class AuthService {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    public AuthService(AuthenticationManager authenticationManager) {
+    public AuthService(AuthenticationManager authenticationManager, UserLoginRepository userRepository, JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
     public String authorizeUser(UserLoginRequestDTO user){
         try{
