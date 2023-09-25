@@ -1,7 +1,6 @@
 package com.bankwithfargo.repository;
 
-import com.bankwithfargo.model.Account;
-import com.bankwithfargo.model.Transaction;
+import com.bankwithfargo.entity.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

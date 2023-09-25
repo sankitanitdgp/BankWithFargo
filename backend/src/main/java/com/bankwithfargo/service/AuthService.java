@@ -1,7 +1,7 @@
 package com.bankwithfargo.service;
 
 import com.bankwithfargo.dto.UserLoginRequestDTO;
-import com.bankwithfargo.model.User;
+import com.bankwithfargo.entity.User;
 import com.bankwithfargo.repository.UserLoginRepository;
 import com.bankwithfargo.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,10 @@ public class AuthService {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    public AuthService(AuthenticationManager authenticationManager) {
+    public AuthService(AuthenticationManager authenticationManager, UserLoginRepository userLoginRepository, JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
+        this.userRepository = userLoginRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
     public String authorizeUser(UserLoginRequestDTO user){
         try{

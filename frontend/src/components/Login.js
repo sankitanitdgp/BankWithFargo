@@ -30,11 +30,6 @@ const Login = () => {
 	const handleEmailChange = (e) => {
 		const { name, value } = e.target;
 		setFormData({ email: value, password: formData.password });
-		if (!formData.email.match(emailRegex)) {
-			setEmailError("Invalid email!");
-		} else {
-			setEmailError("");
-		}
 	};
 	const handlePasswordChange = (e) => {
 		const { name, value } = e.target;
@@ -44,20 +39,25 @@ const Login = () => {
 		// } else {
 		//   setPasswordError("");
 		// }
-
-		if (value.length < 8) {
-			setPasswordError("Password must be at least 8 characters long");
-		} else {
-			setPasswordError("");
-		}
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
+
+		if (!formData.email.match(emailRegex)) {
+			setEmailError("Invalid email!");
+		} else {
+			setEmailError("");
+		}
+
 		setShowSpinner(true);
 		UserService.login(formData).then((res) => {
 			setShowSpinner(false);
 			console.log(res);
-			if (res === "Incorrect password") {
+			if (res === "User not found") {
+				setEmailError(res);
+				setPasswordError("");
+			} else if (res === "Incorrect password") {
+				setEmailError("");
 				setPasswordError(res);
 			} else {
 				cookies.set("token", res, { path: "/", maxAge: 10 * 1000 });
@@ -68,9 +68,8 @@ const Login = () => {
 					cookies.set("role", "user");
 					navigate("/dashboard");
 				}
+				window.location.reload();
 			}
-
-			window.location.reload();
 		});
 		setSuccess("visible");
 	};

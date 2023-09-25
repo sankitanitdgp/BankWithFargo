@@ -141,6 +141,14 @@ const OpenAccount = (props) => {
 		<Container className="container-class">
 			<Row className="justify-content-center">
 				<Col md={6}>
+					<div
+						className="back-div"
+						onClick={() => {
+							navigate("/dashboard");
+						}}
+					>
+						<i class="fas fa-chevron-left"></i> Back to dashboard
+					</div>
 					<h2 className="text-center">Open a Savings Account</h2>
 					<Form onSubmit={handleSubmit} className="Form">
 						<Form.Group

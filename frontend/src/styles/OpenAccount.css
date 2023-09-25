@@ -64,3 +64,11 @@ color: rgb(34, 34, 34);
     pointer-events: none;
 }
 
+.back-div{
+    position: absolute;
+    left: 50px;
+    cursor: pointer;
+}
+.back-div:hover{
+    opacity: 0.8;
+}

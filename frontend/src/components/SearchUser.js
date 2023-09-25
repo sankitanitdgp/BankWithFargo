@@ -123,6 +123,14 @@ function SearchUser() {
 
 	return (
 		<Container className="container-class">
+			<div
+				className="back-div"
+				onClick={() => {
+					navigate("/dashboard");
+				}}
+			>
+				<i class="fas fa-chevron-left"></i> Back to dashboard
+			</div>
 			<h1>
 				<center>Search User Details</center>
 			</h1>

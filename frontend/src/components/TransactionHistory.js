@@ -79,6 +79,14 @@ function TransactionHistory() {
 
 	return (
 		<div className="table-container">
+			<div
+				className="back-div"
+				onClick={() => {
+					navigate("/dashboard");
+				}}
+			>
+				<i class="fas fa-chevron-left"></i> Back to dashboard
+			</div>
 			<h2>
 				<center>Transaction History</center>
 			</h2>

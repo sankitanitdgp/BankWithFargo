@@ -1,9 +1,9 @@
 package com.bankwithfargo.service;
 
 import com.bankwithfargo.dto.*;
-import com.bankwithfargo.model.Account;
-import com.bankwithfargo.model.Transaction;
-import com.bankwithfargo.model.User;
+import com.bankwithfargo.entity.Account;
+import com.bankwithfargo.entity.Transaction;
+import com.bankwithfargo.entity.User;
 import com.bankwithfargo.repository.AccountRepository;
 import com.bankwithfargo.repository.TransactionRepository;
 import com.bankwithfargo.repository.UserLoginRepository;
@@ -11,16 +11,12 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -35,7 +31,7 @@ public class AccountService {
     TransactionRepository transactionRepository;
 
     public Account openAccount(AccountRequestDTO account, User user) {
-        try {
+
             Account newAccount = new Account();
             BeanUtils.copyProperties(account, newAccount);
             newAccount.setAccountStatus(true);
@@ -56,10 +52,6 @@ public class AccountService {
 
             return accountRepository.save(newAccount);
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
     }
 
     public ResponseEntity<Object> getTransactions(TransactionRequestDTO transactionRequestDTO, User user) {
@@ -75,9 +67,7 @@ public class AccountService {
 
     public Object checkBalance(CheckBalanceDTO checkBalanceDTO){
        Account account=accountRepository.findByAccountNumber(checkBalanceDTO.getAccNo());
-       if(account==null)
-           return "Account does not exist.";
-       else if(account.getMpin() != checkBalanceDTO.getMpin())
+       if(account.getMpin() != checkBalanceDTO.getMpin())
            return "Incorrect MPIN";
        else
            return account.getBalance();
@@ -93,7 +83,7 @@ public class AccountService {
     }
 
     public String depositMoney(DepositMoneyDTO depositMoneyDTO){
-        try{
+
             Account account=accountRepository.findByAccountNumber(depositMoneyDTO.getAccNo());
             if(depositMoneyDTO.getMpin() != account.getMpin()){
                 return "Incorrect MPIN";
@@ -107,14 +97,10 @@ public class AccountService {
                 accountRepository.save(account);
                 return "Money deposited successfully!";
             }
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-        return "An error occurred";
+
     }
 
     public String withdrawMoney(DepositMoneyDTO depositMoneyDTO){
-        try{
             Account account=accountRepository.findByAccountNumber(depositMoneyDTO.getAccNo());
             if(depositMoneyDTO.getMpin() != account.getMpin()){
                 return "Incorrect MPIN";
@@ -129,14 +115,10 @@ public class AccountService {
                 accountRepository.save(account);
                 return "Money withdrawn successfully!";
             }
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-        return "An error occurred";
+
     }
 
     public String transferMoney(TransferMoneyDTO transferMoneyDTO){
-        try{
             Account senderAccount=accountRepository.findByAccountNumber(transferMoneyDTO.getSenderAccNumber());
 //            Account receiverAccount=accountRepository.findByAccountNumber(transferMoneyDTO.getReceiverAccNumber());
             if(transferMoneyDTO.getMpin() != senderAccount.getMpin()){
@@ -168,10 +150,6 @@ public class AccountService {
                 return "Money transferred successfully!";
             }
 
-        } catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-        return "An error occurred";
     }
 
     @Transactional

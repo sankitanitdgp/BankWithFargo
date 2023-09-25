@@ -1,4 +1,4 @@
-package com.bankwithfargo.model;
+package com.bankwithfargo.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -6,12 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.checkerframework.common.aliasing.qual.Unique;
-
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user")

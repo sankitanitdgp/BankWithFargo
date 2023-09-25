@@ -1,4 +1,4 @@
-package com.bankwithfargo.model;
+package com.bankwithfargo.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -6,11 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.checkerframework.common.aliasing.qual.Unique;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -28,6 +24,8 @@ public class Account {
     private String title;
 
     @Column(name="first_name", nullable = false)
+    @NotNull
+    @NotEmpty
     private String firstName;
 
     @Column(name="last_name", nullable = false)
@@ -35,12 +33,12 @@ public class Account {
 
     @Column(name = "pan", nullable = false)
     @NotNull
-//    @Pattern(regexp="[A-Z]{5}[0-9]{4}[A-Z]$", message="Invalid PAN number")
+    @Pattern(regexp="[A-Z]{5}[0-9]{4}[A-Z]$", message="Invalid PAN number")
     private String pan;
 
     @Column(name = "phone", nullable = false)
     @NotNull
-//    @Pattern(regexp="[0-9]{10}", message="Invalid phone number. Please provide a 10 digit number.")
+    @Pattern(regexp="[0-9]{10}", message="Invalid phone number. Please provide a 10 digit number.")
     private String phone;
 
     @Column(name="present_address", nullable = false)
@@ -70,6 +68,7 @@ public class Account {
     private Long income;
 
     @Column(name="mpin", nullable = false)
+    @NotNull
     private int mpin;
 
     @Column(name="dob", nullable = false)
