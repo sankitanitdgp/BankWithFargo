@@ -56,7 +56,7 @@ public class UserControllerTest {
     @Test
     public void testAddUser() {
         UserSignupRequestDTO userSignupRequestDTO = new UserSignupRequestDTO(); // Create a mock UserSignupRequestDTO
-        when(userService.createUser(userSignupRequestDTO)).thenReturn(String.valueOf(new ResponseEntity<>(HttpStatus.CREATED))); // Mock the userService
+        when(userService.createUser(userSignupRequestDTO)).thenReturn((new ResponseEntity<>(HttpStatus.CREATED))); // Mock the userService
 
         ResponseEntity<Object> response = userController.addUser(userSignupRequestDTO);
 
