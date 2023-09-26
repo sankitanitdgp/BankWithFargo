@@ -30,6 +30,11 @@ public class AccountService {
     @Autowired
     TransactionRepository transactionRepository;
 
+    public AccountService(AccountRepository accountRepository, TransactionRepository transactionRepository){
+        this.accountRepository=accountRepository;
+        this.transactionRepository=transactionRepository;
+    }
+
     public Account openAccount(AccountRequestDTO account, User user) {
 
             Account newAccount = new Account();

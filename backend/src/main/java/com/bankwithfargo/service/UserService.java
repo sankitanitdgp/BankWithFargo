@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,9 +27,19 @@ public class UserService {
 
     @Autowired
     JwtTokenProvider jwtTokenProvider;
+
+    public UserService(UserLoginRepository userRepository, AccountRepository accountRepository, JwtTokenProvider jwtTokenProvider){
+        this.userRepository=userRepository;
+        this.accountRepository=accountRepository;
+        this.jwtTokenProvider=jwtTokenProvider;
+    }
+
     public List<Account> getAllUsers(User user){
-        if(user.getEmail().equals("admin6@gmail.com"))
-            return accountRepository.findAll();
+        if(user.getEmail().equals("admin6@gmail.com")) {
+            List<Account> accounts = accountRepository.findAll();
+            return accounts;
+
+        }
         else return null;
 //        ArrayList<UserLoginRequestDTO> returnValue = new ArrayList<>();
 //        BeanUtils.copyProperties(users, returnValue);
@@ -38,13 +49,14 @@ public class UserService {
     @Transactional
     public ResponseEntity<Object> createUser(UserSignupRequestDTO user){
 
-        User u= userRepository.findOneByEmail(user.getEmail());
+       User u= userRepository.findOneByEmail(user.getEmail());
+
         if(u==null) {
             try {
                 User newUser = new User();
                 BeanUtils.copyProperties(user, newUser);
-                userRepository.save(newUser);
-                return ResponseEntity.ok("User Registered Successfully");
+                User createdUser = userRepository.save(newUser);
+                return ResponseEntity.ok(createdUser);
             } catch (Exception e) {
                 return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
             }
@@ -54,12 +66,10 @@ public class UserService {
     }
 
     public Account getUserByAccountNo(AccountNoDTO accountNoDTO, User user) {
-        System.out.println("account no - " + accountNoDTO.getAccNo());
         if (user.getEmail().equals("admin6@gmail.com")){
-            System.out.println("in admin");
-        return accountRepository.findByAccountNumber(accountNoDTO.getAccNo());
+        Account account= accountRepository.findByAccountNumber(accountNoDTO.getAccNo());
+        return account;
         } else{
-            System.out.println("in user");
             return null;
         }
 
