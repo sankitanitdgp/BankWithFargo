@@ -33,7 +33,7 @@ function ViewBalanceModal(props) {
 		};
 		AccountService.getAllAccounts(config).then((res) => {
 			if (res.status && res.status === 401) {
-				navigate("/login");
+				navigate("/");
 			} else {
 				setAccounts(res.data);
 			}
@@ -56,7 +56,7 @@ function ViewBalanceModal(props) {
 			setShowSpinner(false);
 			console.log("balance", res);
 			if (res.status && res.status === 401) {
-				navigate("/login");
+				navigate("/");
 			} else if (res === "Incorrect MPIN") {
 				setError(res);
 			} else {

@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class UserService {
 
     @Autowired
     JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserService(UserLoginRepository userRepository, AccountRepository accountRepository, JwtTokenProvider jwtTokenProvider){
         this.userRepository=userRepository;
@@ -54,7 +58,9 @@ public class UserService {
         if(u==null) {
             try {
                 User newUser = new User();
-                BeanUtils.copyProperties(user, newUser);
+                String hashedPassword = passwordEncoder.encode(user.getPassword());
+                newUser.setEmail(user.getEmail());
+                newUser.setPassword(hashedPassword);
                 User createdUser = userRepository.save(newUser);
                 return ResponseEntity.ok(createdUser);
             } catch (Exception e) {

@@ -51,21 +51,6 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    //	@Bean
-//	public UserDetailsService userDetailsService() {
-//
-//		UserDetails reni=User.builder()
-//				.username("reni")
-//				.password(passwordEncoder().encode("pwd"))
-//				.roles("USER").build();
-//
-//		UserDetails admin=User.builder()
-//				.username("admin")
-//				.password(passwordEncoder().encode("pass"))
-//				.roles("ADMIN").build();
-//
-//		return new InMemoryUserDetailsManager(reni,admin);
-//	}
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

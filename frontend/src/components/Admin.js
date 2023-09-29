@@ -14,7 +14,7 @@ function AdminDashboard() {
 
 	useEffect(() => {
 		if (!cookies.get("token")) {
-			navigate("/login");
+			navigate("/");
 		}
 	});
 
@@ -46,7 +46,7 @@ function AdminDashboard() {
 						<Link to="/adminTransactions" style={{ color: "black" }}>
 							<div className="card-div">
 								<div className="card-icon-div">
-									<i class="fas fa-wallet"></i>
+									<i class="fas fa-history"></i>
 								</div>
 								<div className="card-title">View Transactions</div>
 							</div>

@@ -6,6 +6,7 @@ import com.bankwithfargo.repository.UserLoginRepository;
 import com.bankwithfargo.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,8 @@ public class AuthService {
     UserLoginRepository userRepository;
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public AuthService(AuthenticationManager authenticationManager, UserLoginRepository userLoginRepository, JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
@@ -25,7 +28,7 @@ public class AuthService {
         try{
             User foundUser=userRepository.findOneByEmail(user.getEmail());
             if(foundUser!=null) {
-                if(foundUser.getPassword().equals(user.getPassword()))
+                if(passwordEncoder.matches(user.getPassword(), foundUser.getPassword()))
                     return jwtTokenProvider.generateToken(user.getEmail());
                 else
                     return "Incorrect password";

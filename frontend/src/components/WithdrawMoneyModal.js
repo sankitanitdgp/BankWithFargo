@@ -35,7 +35,7 @@ function WithdrawMoneyModal(props) {
 		};
 		AccountService.getAllAccounts(config).then((res) => {
 			if (res.status && res.status === 401) {
-				navigate("/login");
+				navigate("/");
 			} else {
 				setAccounts(res.data);
 			}
@@ -57,7 +57,7 @@ function WithdrawMoneyModal(props) {
 		).then((res) => {
 			setShowSpinner(false);
 			if (res.status && res.status === 401) {
-				navigate("/login");
+				navigate("/");
 			} else {
 				if (res === "Money withdrawn successfully!") setError(false);
 				else setError(true);

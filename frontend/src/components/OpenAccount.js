@@ -30,12 +30,14 @@ const OpenAccount = (props) => {
 
 	useEffect(() => {
 		if (!cookies.get("token")) {
-			navigate("/login");
+			navigate("/");
 		}
 	});
 
 	const [confirmMpin, setConfirmMpin] = useState("");
-	const [errors, setErrors] = useState({});
+	const [panError, setPanError] = useState("");
+	const [phoneError, setPhoneError] = useState("");
+	const [mpinError, setMpinError] = useState("");
 	const [success, setSuccess] = useState("hidden");
 	const handleTitleChange = (e) => {
 		console.log(e.target.value);
@@ -75,7 +77,7 @@ const OpenAccount = (props) => {
 
 	const handlePAN = (e) => {
 		const { name, value } = e.target;
-		setFormData({ ...formData, pan: value });
+		setFormData({ ...formData, pan: value.toUpperCase() });
 	};
 
 	const handleMPIN = (e) => {
@@ -111,24 +113,43 @@ const OpenAccount = (props) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setShowSpinner(true);
+		setPhoneError("");
+		setPanError("");
+		setMpinError("");
 		// Implement your validation logic here
 		// For simplicity, we're assuming a basic validation for the password match
 		if (formData.mpin !== confirmMpin) {
-			setErrors({ confirmPassword: "Passwords do not match" });
-
-			console.log("hello");
+			setShowSpinner(false);
+			setMpinError("MPIN passwords do not match");
 		} else {
 			// Submit your data to the server or perform further actions here
 			console.log(formData);
+			setMpinError("");
 			const config = {
 				headers: { Authorization: `Bearer ${cookies.get("token")}` },
 			};
 			AccountService.openAccount(formData, config).then((res) => {
-				console.log(res);
+				console.log("res", res);
 				setShowSpinner(false);
 				if (res.status && res.status === 401) {
-					navigate("/login");
+					navigate("/");
+				} else if (res.data) {
+					if (
+						res.data === "Invalid PAN number\nInvalid phone number\n" ||
+						res.data === "Invalid phone number\nInvalid PAN number\n"
+					) {
+						setPhoneError("Invalid phone number");
+						setPanError("Invalid PAN number");
+					} else if (res.data === "Invalid PAN number\n") {
+						setPanError("Invalid PAN number");
+						setPhoneError("");
+					} else if (res.data === "Invalid phone number\n") {
+						setPhoneError("Invalid phone number");
+						setPanError("");
+					}
 				} else {
+					setPanError("");
+					setPhoneError("");
 					console.log("Account opened successfully: ", res);
 					setShowSuccessModal(true);
 				}
@@ -173,15 +194,6 @@ const OpenAccount = (props) => {
 								<div className="dropdown-arrow"></div>
 							</div>
 						</Form.Group>
-						{/* <Form.Control
-								type="text"
-								name="title"
-								placeholder="Miss/Mr./Mrs."
-								value={formData.title}
-								onChange={handleTitleChange}
-								required
-							/>
-						</Form.Group> */}
 
 						<Form.Group
 							controlId="firstName"
@@ -274,6 +286,7 @@ const OpenAccount = (props) => {
 								onChange={handlePhone}
 								required
 							/>
+							<div className="open-acc-error">{phoneError}</div>
 						</Form.Group>
 
 						<Form.Group controlId="pan" autocomplete="off" className="Form-grp">
@@ -282,10 +295,11 @@ const OpenAccount = (props) => {
 								type="text"
 								name="pan"
 								placeholder="Enter your PAN"
-								value={formData.pan}
+								value={formData.pan.toUpperCase()}
 								onChange={handlePAN}
 								required
 							/>
+							<div className="open-acc-error">{panError}</div>
 						</Form.Group>
 
 						<Form.Group
@@ -318,6 +332,7 @@ const OpenAccount = (props) => {
 								onChange={handleConfirmMPIN}
 								required
 							/>
+							<div className="open-acc-error">{mpinError}</div>
 						</Form.Group>
 
 						<Form.Group

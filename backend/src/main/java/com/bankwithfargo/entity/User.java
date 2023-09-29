@@ -19,8 +19,6 @@ public class User {
     private String email;
 
     @Column(name = "pwd", nullable = false)
-    @NotNull(message = "Password should not be null")
-    @Pattern(regexp = "[A-Za-z0-9]{8,}", message="password should have min 8 alphanumeric characters")
     private String password;
 
 }
