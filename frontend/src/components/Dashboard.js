@@ -36,7 +36,7 @@ function Dashboard() {
 
 	useEffect(() => {
 		if (!cookies.get("token")) {
-			navigate("/login");
+			navigate("/");
 		} else if (cookies.get("role") == "admin") {
 			navigate("/adminDashboard");
 		}
@@ -67,7 +67,7 @@ function Dashboard() {
 					<Link to="/transactions" style={{ color: "black" }}>
 						<div className="card-div">
 							<div className="card-icon-div">
-								<i class="fas fa-wallet"></i>
+								<i class="fas fa-history"></i>
 							</div>
 							<div className="card-title">View Transactions</div>
 						</div>

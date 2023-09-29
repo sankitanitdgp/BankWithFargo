@@ -25,9 +25,9 @@ function TransactionHistory() {
 
 	useEffect(() => {
 		if (!cookies.get("token")) {
-			navigate("/login");
+			navigate("/");
 		} else if (cookies.get("role") === "user") {
-			navigate("/login");
+			navigate("/");
 		}
 	}, []);
 
@@ -38,7 +38,7 @@ function TransactionHistory() {
 		};
 		UserService.getAllUsers(config).then((res) => {
 			if (res.status && res.status === 401) {
-				navigate("/login");
+				navigate("/");
 			} else {
 				console.log(res);
 				setAccounts(res);
@@ -60,7 +60,7 @@ function TransactionHistory() {
 		).then((res) => {
 			console.log("transaction", res.body);
 			if (res.status && res.status === 401) {
-				navigate("/login");
+				navigate("/");
 			} else {
 				setError("");
 				setTransactions(res.body);

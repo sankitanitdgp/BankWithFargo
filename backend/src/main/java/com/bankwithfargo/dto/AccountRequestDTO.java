@@ -24,7 +24,7 @@ public class AccountRequestDTO {
     private Date dob;
     private String fatherName;
     @NotNull(message = "phone number cannot be null")
-    @Pattern(regexp="[0-9]{10}", message="Invalid phone number. Please provide a 10 digit number.")
+    @Pattern(regexp="[0-9]{10}", message="Invalid phone number")
     private String phone;
     private String presentAddress;
     private String permanentAddress;

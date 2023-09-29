@@ -72,3 +72,9 @@ color: rgb(34, 34, 34);
 .back-div:hover{
     opacity: 0.8;
 }
+
+.open-acc-error{
+    width: fit-content;
+    margin: 10px auto;
+    color: red;
+}

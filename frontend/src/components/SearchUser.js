@@ -36,10 +36,11 @@ function SearchUser() {
 				config
 			).then((res) => {
 				if (res.status && res.status === 401) {
-					navigate("/login");
+					navigate("/");
 				} else {
 					console.log("accounts:", res);
 					setAccounts([res]);
+					setStatusArray([res.accountStatus]);
 				}
 			});
 		} else {
@@ -68,7 +69,7 @@ function SearchUser() {
 			config
 		).then((res) => {
 			if (res.status && res.status === 401) {
-				navigate("/login");
+				navigate("/");
 			} else {
 				window.location.reload();
 				console.log("res", res);
@@ -93,9 +94,9 @@ function SearchUser() {
 
 	useEffect(() => {
 		if (!cookies.get("token")) {
-			navigate("/login");
+			navigate("/");
 		} else if (cookies.get("role") == "user") {
-			navigate("/login");
+			navigate("/");
 		}
 		const config = {
 			headers: { Authorization: `Bearer ${cookies.get("token")}` },
@@ -103,7 +104,7 @@ function SearchUser() {
 		UserService.getAllUsers(config).then((res) => {
 			console.log(res);
 			if (res.status && res.status === 401) {
-				navigate("/login");
+				navigate("/");
 			} else {
 				setAccounts(res);
 				console.log(res);

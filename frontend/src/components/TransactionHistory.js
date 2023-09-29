@@ -27,7 +27,7 @@ function TransactionHistory() {
 
 	useEffect(() => {
 		if (!cookies.get("token")) {
-			navigate("/login");
+			navigate("/");
 		} else if (cookies.get("role") == "admin") {
 			navigate("/adminTransactions");
 		}
@@ -40,7 +40,7 @@ function TransactionHistory() {
 		};
 		AccountService.getAllAccounts(config).then((res) => {
 			if (res.status && res.status === 401) {
-				navigate("/login");
+				navigate("/");
 			} else {
 				setAccounts(res.data);
 			}
@@ -63,7 +63,7 @@ function TransactionHistory() {
 		).then((res) => {
 			console.log("transaction", res);
 			if (res.status && res.status === 401) {
-				navigate("/login");
+				navigate("/");
 			} else if (res.body === "Incorrect MPIN") {
 				setError(res.body);
 				setShowSpinner(false);

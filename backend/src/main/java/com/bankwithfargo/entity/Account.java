@@ -74,7 +74,7 @@ public class Account {
     @Column(name="dob", nullable = false)
     private Date dob;
 
-    @NotNull
+    @NotNull(message = "Email not registered")
     @ManyToOne
     @JoinColumn(name="user", referencedColumnName = "email")
     private User user;
