@@ -15,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -170,6 +169,31 @@ public class AccountServiceTest {
     }
 
     @Test
+    public void testGetAllAccountsByUser() {
+        List<Account> mockAccounts = new ArrayList<>();
+        User user = new User();
+        user.setEmail("test@example.com");
+        Account account1 = new Account();
+        Account account2 = new Account();
+        account1.setUser(user);
+        account2.setUser(user);
+        mockAccounts.add(account1);
+        mockAccounts.add(account2);
+
+        // Configure accountRepository.findAccountNumbersByEmail() to return the mock list of accounts
+        when(accountRepository.findAccountNumbersByEmail(user.getEmail())).thenReturn(mockAccounts);
+
+        // Perform the test
+        List<Account> accounts = accountService.getAllAccountsByUser(user);
+
+        // Verify that accountRepository.findAccountNumbersByEmail() was called with the user's email
+        verify(accountRepository, times(1)).findAccountNumbersByEmail(user.getEmail());
+
+        // Verify that the returned list of accounts matches the mock list
+        assertEquals(mockAccounts, accounts);
+    }
+
+    @Test
     public void testDepositMoneySuccess() {
         DepositMoneyDTO depositMoneyDTO = new DepositMoneyDTO();
         depositMoneyDTO.setAmount(100D);
@@ -224,6 +248,78 @@ public class AccountServiceTest {
 
         String result = accountService.depositMoney(depositMoneyDTO);
         assertEquals("Sorry! Your account has been disabled by admin",result);
+    }
+
+    @Test
+    public void testWithdrawMoney() {
+        // Create a mock account
+        DepositMoneyDTO depositMoneyDTO = new DepositMoneyDTO();
+        depositMoneyDTO.setAmount(100D);
+        depositMoneyDTO.setMpin(1234);
+        depositMoneyDTO.setAccNo(12345L);
+
+        Account account=new Account();
+        account.setMpin(1234);
+        account.setBalance(1000D);
+        account.setAccountStatus(true);
+        account.setAccountNumber(depositMoneyDTO.getAccNo());
+
+        // Configure accountRepository.findByAccountNumber() to return the mock account
+        when(accountRepository.findByAccountNumber(depositMoneyDTO.getAccNo())).thenReturn(account);
+
+        // Perform the test
+        String result = accountService.withdrawMoney(depositMoneyDTO);
+
+        // Verify the result
+        assertEquals("Money withdrawn successfully!", result);
+    }
+
+    @Test
+    public void testWithdrawMoneyFailure1() {
+        // Create a mock account
+        DepositMoneyDTO depositMoneyDTO = new DepositMoneyDTO();
+        depositMoneyDTO.setAmount(1000D);
+        depositMoneyDTO.setMpin(1234);
+        depositMoneyDTO.setAccNo(12345L);
+
+        Account account=new Account();
+        account.setMpin(1234);
+        account.setBalance(10D);
+        account.setAccountStatus(true);
+        account.setAccountNumber(depositMoneyDTO.getAccNo());
+
+        // Configure accountRepository.findByAccountNumber() to return the mock account
+        when(accountRepository.findByAccountNumber(depositMoneyDTO.getAccNo())).thenReturn(account);
+
+        // Perform the test
+        String result = accountService.withdrawMoney(depositMoneyDTO);
+
+        // Verify the result
+        assertEquals("Insufficient balance", result);
+    }
+
+    @Test
+    public void testWithdrawMoneyFailure2() {
+        // Create a mock account
+        DepositMoneyDTO depositMoneyDTO = new DepositMoneyDTO();
+        depositMoneyDTO.setAmount(100D);
+        depositMoneyDTO.setMpin(1234);
+        depositMoneyDTO.setAccNo(12345L);
+
+        Account account=new Account();
+        account.setMpin(1234);
+        account.setBalance(1000D);
+        account.setAccountStatus(false);
+        account.setAccountNumber(depositMoneyDTO.getAccNo());
+
+        // Configure accountRepository.findByAccountNumber() to return the mock account
+        when(accountRepository.findByAccountNumber(depositMoneyDTO.getAccNo())).thenReturn(account);
+
+        // Perform the test
+        String result = accountService.withdrawMoney(depositMoneyDTO);
+
+        // Verify the result
+        assertEquals("Sorry! Your account has been disabled by admin", result);
     }
 
     @Test
@@ -286,4 +382,47 @@ public class AccountServiceTest {
         assertEquals("Cannot transfer money to same account",result);
     }
 
+    @Test
+    public void testChangeAccountStatusAsAdmin() {
+        // Create a mock account
+        Account account = new Account();
+        account.setAccountStatus(true);
+        account.setAccountNumber(1234L);
+        User user = new User();
+        user.setEmail("admin6@gmail.com");
+        AccountNoDTO accountNoDTO = new AccountNoDTO();
+        accountNoDTO.setAccNo(1234L);
+
+        // Configure accountRepository.findByAccountNumber() to return the mock account
+        when(accountRepository.findByAccountNumber(accountNoDTO.getAccNo())).thenReturn(account);
+
+        // Perform the test
+        Boolean result = accountService.changeAccountStatus(accountNoDTO, user);
+
+        // Verify that accountRepository.findByAccountNumber() was called with the account number from accountNoDTO
+        verify(accountRepository, times(1)).findByAccountNumber(accountNoDTO.getAccNo());
+
+        // Verify that the account status was toggled
+        assertFalse(result);
+    }
+
+    @Test
+    public void testChangeAccountStatusAsNonAdmin() {
+        Account account = new Account();
+        account.setAccountStatus(true);
+        account.setAccountNumber(1234L);
+        User user = new User();
+        user.setEmail("user@example.com");
+        AccountNoDTO accountNoDTO = new AccountNoDTO();
+        accountNoDTO.setAccNo(1234L);
+
+        // Perform the test
+        Boolean result = accountService.changeAccountStatus(accountNoDTO, user);
+
+        // Verify that accountRepository.findByAccountNumber() was not called
+        verify(accountRepository, never()).findByAccountNumber(anyLong());
+
+        // Verify that the result is null since the user is not an admin
+        assertNull(result);
+    }
 }

@@ -45,7 +45,7 @@ public class AccountController {
         try {
             return new ResponseEntity<Object>(accountService.getTransactions(accNo, user), HttpStatus.OK);
         } catch(NullPointerException e){
-            throw new AccountNotFoundException("Account does not exists");
+            throw new AccountNotFoundException("Account does not exist");
         }
     }
 
@@ -54,7 +54,7 @@ public class AccountController {
         try {
             return new ResponseEntity<Object>(accountService.checkBalance(checkBalanceDTO), HttpStatus.OK);
         } catch(NullPointerException e){
-            throw new AccountNotFoundException("Account does not exists");
+            throw new AccountNotFoundException("Account does not exist");
         }
     }
 
@@ -70,7 +70,7 @@ public class AccountController {
         try {
             return new ResponseEntity<Object>(accountService.depositMoney(depositMoneyDTO), HttpStatus.OK);
         } catch(NullPointerException e){
-            throw new AccountNotFoundException("Account does not exists");
+            throw new AccountNotFoundException("Account does not exist");
         }
     }
 
@@ -80,7 +80,7 @@ public class AccountController {
         try {
             return new ResponseEntity<Object>(accountService.withdrawMoney(depositMoneyDTO), HttpStatus.OK);
         } catch(NullPointerException e){
-            throw new AccountNotFoundException("Account does not exists");
+            throw new AccountNotFoundException("Account does not exist");
         }
     }
 
