@@ -162,7 +162,6 @@ public class AccountService {
         if(user.getEmail().equals("admin6@gmail.com")){
             Account account=accountRepository.findByAccountNumber(accountNoDTO.getAccNo());
             account.setAccountStatus(!account.getAccountStatus());
-            System.out.println(account.getAccountStatus());
             return account.getAccountStatus();
         } else {
             return null;
