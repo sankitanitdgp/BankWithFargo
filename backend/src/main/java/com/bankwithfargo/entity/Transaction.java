@@ -30,6 +30,9 @@ public class Transaction {
     @Column(name="amount", nullable = false)
     private Double amount;
 
+    @Column(name="status", nullable = true)
+    private String status;
+
     @Column(name = "timestamp", nullable = false)
     @NotNull
     private Date timeStamp;

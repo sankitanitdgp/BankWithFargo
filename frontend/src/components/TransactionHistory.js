@@ -178,11 +178,12 @@ function TransactionHistory() {
 								<td>{transaction.senderAccNo}</td>
 								<td>{transaction.receiverAccNo}</td>
 								<td>{transaction.amount}</td>
-								{transaction.senderAccNo === parseInt(selectedAcc) ? (
+								{transaction.status === "" || transaction.status === null?(transaction.senderAccNo === parseInt(selectedAcc) ? (
 									<td style={{ color: "red" }}>DEBIT</td>
 								) : (
 									<td style={{ color: "green" }}>CREDIT</td>
-								)}
+								)):transaction.status==="DEBIT"?(<td style={{ color: "red" }}>DEBIT</td>):(<td style={{ color: "green" }}>CREDIT</td>)}
+								
 								{/* <td style={transaction.senderAccNo===selectedAcc? {color:"red"}:{color:"green"}}>{transaction.amount}</td> */}
 								<td>{new Date(transaction.timeStamp).toLocaleString()}</td>
 							</tr>

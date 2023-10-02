@@ -98,8 +98,21 @@ public class AccountService {
                 return "Sorry! Your account has been disabled by admin";
             }
             else {
+                Transaction transaction = new Transaction();
+                transaction.setSenderAccNo(depositMoneyDTO.getAccNo());
+                transaction.setReceiverAccNo(depositMoneyDTO.getAccNo());
+                transaction.setTimeStamp(new Date());
+                transaction.setAmount(depositMoneyDTO.getAmount());
+                transaction.setStatus("CREDIT");
+
+////                long transactionId = new Random().nextInt(0, Integer.MAX_VALUE);
+////                transaction.setTransactionId(transactionId);
+
+                transactionRepository.save(transaction);
                 account.setBalance(account.getBalance() + depositMoneyDTO.getAmount());
                 accountRepository.save(account);
+//                receiverAccount.setBalance(receiverAccount.getBalance() + transferMoneyDTO.getAmount());
+//                accountRepository.save(receiverAccount);
                 return "Money deposited successfully!";
             }
 
@@ -116,9 +129,23 @@ public class AccountService {
             } else if(!account.getAccountStatus()) {
                 return "Sorry! Your account has been disabled by admin";
             } else {
+                Transaction transaction = new Transaction();
+                transaction.setSenderAccNo(depositMoneyDTO.getAccNo());
+                transaction.setReceiverAccNo(depositMoneyDTO.getAccNo());
+                transaction.setTimeStamp(new Date());
+                transaction.setAmount(depositMoneyDTO.getAmount());
+                transaction.setStatus("DEBIT");
+//
+////                long transactionId = new Random().nextInt(0, Integer.MAX_VALUE);
+////                transaction.setTransactionId(transactionId);
+//
+                transactionRepository.save(transaction);
                 account.setBalance(account.getBalance() - depositMoneyDTO.getAmount());
                 accountRepository.save(account);
+//                receiverAccount.setBalance(receiverAccount.getBalance() + transferMoneyDTO.getAmount());
+//                accountRepository.save(receiverAccount);
                 return "Money withdrawn successfully!";
+
             }
 
     }
