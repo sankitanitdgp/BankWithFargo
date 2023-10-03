@@ -309,7 +309,7 @@ const OpenAccount = (props) => {
 						>
 							<Form.Label>MPIN</Form.Label>
 							<Form.Control
-								type="text"
+								type="password"
 								name="mpin"
 								placeholder="Enter MPIN"
 								value={formData.mpin}
@@ -325,7 +325,7 @@ const OpenAccount = (props) => {
 						>
 							<Form.Label>Confirm MPIN</Form.Label>
 							<Form.Control
-								type="text"
+								type="password"
 								name="confirmMpin"
 								placeholder="Confirm MPIN"
 								value={formData.confirmMpin}

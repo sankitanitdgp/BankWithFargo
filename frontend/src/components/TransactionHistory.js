@@ -124,7 +124,7 @@ function TransactionHistory() {
 				>
 					<Form.Label>MPIN</Form.Label>
 					<Form.Control
-						type="text"
+						type="password"
 						name="mpin"
 						placeholder="Enter MPIN"
 						value={mpin}
