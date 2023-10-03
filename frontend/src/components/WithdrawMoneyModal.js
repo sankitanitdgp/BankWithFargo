@@ -44,6 +44,17 @@ function WithdrawMoneyModal(props) {
 
 	const handleSubmitAccount = () => {
 		setShowSpinner(true);
+		if(selectedAcc===""){
+			setError(true);
+			setMessage("Please select an account");
+			setShowSpinner(false);
+			return;
+		} else if(amount===""){
+			setError(true);
+			setMessage("Amount cannot be empty");
+			setShowSpinner(false);
+			return;
+		}
 		const config = {
 			headers: { Authorization: `Bearer ${cookies.get("token")}` },
 		};
