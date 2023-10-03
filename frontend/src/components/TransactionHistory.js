@@ -51,6 +51,11 @@ function TransactionHistory() {
 		e.preventDefault();
 		setShowSpinner(true);
 		setTransactions([]);
+		if(selectedAcc===""){
+			setError("Please select an account");
+			setShowSpinner(false);
+			return;
+		}
 		const config = {
 			headers: { Authorization: `Bearer ${cookies.get("token")}` },
 		};
